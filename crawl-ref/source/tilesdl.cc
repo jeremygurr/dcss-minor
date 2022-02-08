@@ -419,7 +419,7 @@ bool TilesFramework::initialise()
     m_layers[LAYER_NORMAL].m_regions.push_back(m_region_tile);
     m_layers[LAYER_NORMAL].m_regions.push_back(m_region_msg);
     m_layers[LAYER_NORMAL].m_regions.push_back(m_region_stat);
-    m_layers[LAYER_NORMAL].m_regions.push_back(m_region_tab);
+    //m_layers[LAYER_NORMAL].m_regions.push_back(m_region_tab);
 
     m_layers[LAYER_CRT].m_regions.push_back(m_region_crt);
 
