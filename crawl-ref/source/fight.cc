@@ -1246,7 +1246,7 @@ bool weapon_uses_strength(skill_type wpn_skill, bool using_weapon)
     {
     case SK_LONG_BLADES:
     case SK_SHORT_BLADES:
-    case SK_CROSSBOWS:
+    case SK_STAVES:
     case SK_BOWS:
     case SK_SLINGS:
         return false;
