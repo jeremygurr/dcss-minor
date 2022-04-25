@@ -1178,6 +1178,15 @@ static void _append_skill_target_desc(string &description, skill_type skill,
     }
 }
 
+static int _get_delay(const item_def &item)
+{
+    if (!is_range_weapon(item))
+        return you.attack_delay_with(nullptr, false, &item).expected();
+    item_def fake_proj;
+    populate_fake_projectile(item, fake_proj);
+    return you.attack_delay_with(&fake_proj, false, &item).expected();
+}
+
 static string _describe_brand(brand_type brand)
 {
     switch (brand) {
@@ -1237,8 +1246,12 @@ static string _damage_rating(const item_def &item)
     rating = stat_modify_damage(rating, skill, true);
     rating = apply_weapon_skill(rating, skill, false);
     rating = apply_fighting_skill(rating, false, false);
+    rating += plusses * DAM_RATE_SCALE;
+
+    const int delay = _get_delay(item);
+    const int rating_per_time = (rating * 10 / delay) / DAM_RATE_SCALE;
+
     rating /= DAM_RATE_SCALE;
-    rating += plusses;
 
     const string base_dam_desc = thrown ? make_stringf("[%d + %d (Thrw)]", base_dam, extra_base_dam)
                                         : make_stringf("%d", base_dam);
@@ -1254,20 +1267,21 @@ static string _damage_rating(const item_def &item)
                                                          : "Slay");
     }
 
-    const string brand_desc
-        = is_unrandom_artefact(item, UNRAND_DAMNATION) ? " + Damn"
-          : thrown ? _describe_missile_brand(item)
-                   : _describe_brand(brand);
-
-    return make_stringf(
-        "\nDamage rating: %d (Base %s x %d%% (%s) x %d%% (Skill)%s)%s.",
-        rating,
-        base_dam_desc.c_str(),
+    const string overall = make_stringf(
+        "\nDamage rating: %d (%d/hit / %d.%d delay/hit)%s",
+        rating_per_time, rating, delay/10, delay % 10,
+        thrown ? _describe_missile_brand(item).c_str()
+               : _describe_brand(brand).c_str());
+    const string per_hit = make_stringf(
+        "\n  (Per hit: Base %d x %d%% (%s) x %d%% (Skill)%s)",
+        base_dam,
         stat_mult,
         use_str ? "Str" : "Dex",
         skill_mult,
         plusses_desc.c_str(),
-        brand_desc.c_str());
+        thrown ? _describe_missile_brand(item).c_str()
+               : _describe_brand(brand).c_str());
+    return overall + per_hit;
 }
 
 static void _append_weapon_stats(string &description, const item_def &item)
