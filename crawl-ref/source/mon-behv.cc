@@ -669,9 +669,14 @@ void handle_behaviour(monster* mon)
             }
 
             if (mon->good_neutral() && mons_is_slime(*mon)
-                && have_passive(passive_t::neutral_slimes))
+                && have_passive(passive_t::neutral_slimes)
+                )
             {
-                set_random_slime_target(mon);
+                if (one_chance_in(10)) {
+                  set_random_slime_target(mon);
+                } else {
+                  set_random_target(mon);
+                }
             }
 
             // Is our foe in LOS?
