@@ -284,7 +284,7 @@ static inline double pow(int x, double y) { return std::pow((double)x, y); }
 
 // Number of top scores to keep. See above for the dgamelaunch setting.
 #ifndef SCORE_FILE_ENTRIES
-#define SCORE_FILE_ENTRIES      100
+#define SCORE_FILE_ENTRIES      10000
 #endif
 
 // Option to allow scoring of wizard characters. Note that even if

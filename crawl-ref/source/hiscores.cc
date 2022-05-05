@@ -436,7 +436,7 @@ UIHiscoresMenu::UIHiscoresMenu()
 
     m_description = make_shared<Text>(string(9, '\n'));
 
-    m_score_entries= make_shared<OuterMenu>(true, 1, 100);
+    m_score_entries= make_shared<OuterMenu>(true, 1, 10000);
     nhsr = 0;
     _construct_hiscore_table();
 
