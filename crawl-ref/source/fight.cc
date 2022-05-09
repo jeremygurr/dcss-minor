@@ -1309,9 +1309,15 @@ int stat_modify_damage(int damage, skill_type wpn_skill, bool using_weapon)
     // Minimum multiplier is 0.01 (1%) (reached at -30 str).
     // Ranged weapons and short/long blades use dex instead.
     const bool use_str = weapon_uses_strength(wpn_skill, using_weapon);
-    const int attr = use_str ? you.strength() : you.dex();
-    damage *= max(1.0, 75 + 2.5 * attr);
-    damage /= 100;
+
+    if (using_weapon) {
+      int attr1 = use_str ? you.strength() : you.dex();
+      int attr2 = you.strength() + you.dex() + you.intel();
+      damage *= max(1.0, 50 + 2.5 * attr1 + 2.5 * attr2 / 3);
+      damage /= 100;
+    } else {
+      damage *= you.strength() * you.dex() / 100;
+    }
 
     return damage;
 }
