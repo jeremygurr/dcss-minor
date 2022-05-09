@@ -1292,7 +1292,7 @@ int stat_modify_damage(int damage, skill_type wpn_skill, bool using_weapon)
       damage *= max(1.0, 50 + 2.5 * attr1 + 2.5 * attr2 / 3);
       damage /= 100;
     } else {
-      damage *= you.strength() * you.dex() / 100;
+      damage *= sqrt(you.strength() * you.dex() / 100.0);
     }
 
     return damage;
