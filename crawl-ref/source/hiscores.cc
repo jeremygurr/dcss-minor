@@ -104,6 +104,8 @@ static string _log_file_name()
 
 int hiscores_new_entry(const scorefile_entry &ne)
 {
+    if (ne.get_score() < 10000) return -1;
+
     unwind_bool score_update(crawl_state.updating_scores, true);
 
     FILE *scores;
