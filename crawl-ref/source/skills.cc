@@ -2104,8 +2104,22 @@ int species_apt(skill_type skill, species_type species)
         spec_skills_initialised = true;
     }
 
-    return max(UNUSABLE_SKILL, _spec_skills[species][skill]
-                               - you.get_mutation_level(MUT_UNSKILLED));
+    int value = _spec_skills[species][skill] - you.get_mutation_level(MUT_UNSKILLED);
+
+    if (species == SP_HUMAN && crawl_state.game_started) {
+      int total_skillpoints = 0;
+      for (int sk = 0; sk < NUM_SKILLS; ++sk) {
+        total_skillpoints += you.skill_points[sk];
+      }
+      double average_skillpoints = total_skillpoints / NUM_SKILLS + 1;
+      average_skillpoints *= 3;
+      value += 10;
+      value *= sqrt(you.skill_points[skill] / average_skillpoints);
+      value -= 10;
+      value = max(-9, min(9, value));
+    }
+
+    return max(UNUSABLE_SKILL, value);
 }
 
 float species_apt_factor(skill_type sk, species_type sp)
@@ -2142,8 +2156,9 @@ vector<skill_type> get_crosstrain_skills(skill_type sk)
 int get_crosstrain_points(skill_type sk)
 {
     int points = 0;
-    for (skill_type cross : get_crosstrain_skills(sk))
-        points += you.skill_points[cross] * 2 / 5;
+    if (you.species != SP_HUMAN)
+      for (skill_type cross : get_crosstrain_skills(sk))
+          points += you.skill_points[cross] * 2 / 5;
     return points;
 
 }
