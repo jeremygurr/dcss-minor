@@ -1219,6 +1219,7 @@ statue_form_octopode TRAN_STATUE_OCTOPODE
 statue_form_djinn TRAN_STATUE_DJINN
 %syn TRAN_STATUE_EQUIP_LAST
 statue_form_felid TRAN_STATUE_FELID
+statue_form_hydra TRAN_STATUE_HYDRA
 dragon_form TRAN_DRAGON
 dragon_form_red TRAN_DRAGON_RED
 dragon_form_white TRAN_DRAGON_WHITE
@@ -1236,12 +1237,14 @@ lich_form_octopode TRAN_LICH_OCTOPODE
 lich_form_djinn TRAN_LICH_DJINN
 %syn TRAN_LICH_EQUIP_LAST
 lich_form_felid TRAN_LICH_FELID
+lich_form_hydra TRAN_LICH_HYDRA
 tree_form TRAN_TREE
 %rim 0
 mushroom_form TRAN_MUSHROOM
 shadow_form TRAN_SHADOW
 storm_form TRAN_STORM_HUMANOID
 storm_form_felid TRAN_STORM_FELID
+storm_form_hydra TRAN_STORM_HYDRA
 storm_form_octopode TRAN_STORM_OCTOPODE
 %rim 1
 
