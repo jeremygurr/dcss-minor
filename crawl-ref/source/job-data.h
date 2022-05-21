@@ -191,7 +191,7 @@ static const map<job_type, job_def> job_data =
     "Fi", "Fighter",
     8, 0, 4,
     { SP_METEORAN, SP_HILL_ORC, SP_TROLL, SP_MINOTAUR, SP_GARGOYLE,
-      SP_PALENTONGA, },
+      SP_PALENTONGA, SP_HYDRA, },
     { },
     { "scale mail", "buckler", "potion of might" },
     WCHOICE_GOOD,
@@ -220,7 +220,7 @@ static const map<job_type, job_def> job_data =
 { JOB_GLADIATOR, {
     "Gl", "Gladiator",
     6, 0, 6,
-    { SP_METEORAN, SP_HILL_ORC, SP_MERFOLK, SP_TROLL, SP_GARGOYLE, SP_GNOLL, },
+    { SP_METEORAN, SP_HILL_ORC, SP_MERFOLK, SP_TROLL, SP_GARGOYLE, SP_GNOLL, SP_HYDRA },
     { },
     { "leather armour", "helmet", "throwing net q:3" },
     WCHOICE_GOOD,
