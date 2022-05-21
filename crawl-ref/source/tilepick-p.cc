@@ -675,6 +675,8 @@ tileidx_t tilep_species_to_base_tile(int sp, int level)
         return TILEP_BASE_VINE_STALKER;
     case SP_BARACHI:
         return TILEP_BASE_BARACHI;
+    case SP_HYDRA:
+        return TILEP_BASE_HYDRA;
     case SP_GNOLL:
         return TILEP_BASE_GNOLL;
     case SP_DJINNI:
