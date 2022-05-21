@@ -5094,6 +5094,7 @@ player::player()
     quiver_action = quiver::action_cycler();
 
     props.clear();
+    props[NUM_HEADS_KEY] = 1;
 
     beholders.clear();
     fearmongers.clear();
