@@ -4020,6 +4020,8 @@ static tileidx_t _tileidx_player_species_base(const species_type species)
             return TILEG_SP_GNOLL;
         case SP_DJINNI:
             return TILEG_SP_DJINNI;
+        case SP_HYDRA:
+            return TILEG_SP_HYDRA;
         default:
             return TILEP_ERROR;
     }

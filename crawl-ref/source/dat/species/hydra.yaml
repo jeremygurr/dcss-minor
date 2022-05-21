@@ -1,0 +1,66 @@
+enum: SP_HYDRA
+monster: MONS_HYDRA
+name: Hydra
+short_name: Hy
+adjective: Hydroid
+genus: Hydra
+difficulty: Advanced
+difficulty_priority: 90
+aptitudes:
+  xp: -1
+  hp: 3
+  mp_mod: -1
+  mr: 3
+  short_blades: False
+  long_blades: False
+  axes: False
+  maces_and_flails: False
+  polearms: False
+  staves: False
+  slings: False
+  bows: False
+  crossbows: False
+  throwing: False
+  armour: False
+  dodging: -2
+  stealth: -2
+  shields: False
+  spellcasting: -1
+  conjurations: -1
+  hexes: -1
+  translocations: -1
+  transmutations: -1
+  fire_magic: -1
+  ice_magic: -1
+  air_magic: -1
+  earth_magic: -1
+  poison_magic: -1
+  evocations: False
+size: giant
+can_swim: true
+str: 15
+int: 6
+dex: 9
+levelup_stat_frequency: 1
+levelup_stats:
+  - str
+  - int
+  - dex
+mutations:
+  1:
+    MUT_REGENERATION: 1
+    MUT_TOUGH_SKIN: 1
+    MUT_NO_GRASPING: 1
+    MUT_NO_ARMOUR: 1
+    MUT_FAST: 1
+    MUT_FANGS: 3
+  6:
+    MUT_REGENERATION: 1
+  12:
+    MUT_REGENERATION: 1
+recommended_jobs:
+  - JOB_GLADIATOR
+  - JOB_BERSERKER
+recommended_weapons:
+  - SK_UNARMED_COMBAT
+altar_action: tower over

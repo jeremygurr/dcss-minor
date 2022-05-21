@@ -419,7 +419,7 @@ namespace species
 
     int arm_count(species_type species)
     {
-        return species == SP_OCTOPODE ? 8 : 2;
+        return species == SP_OCTOPODE ? 8 : (SP_HYDRA ? 0 : 2);
     }
 
     equipment_type sacrificial_arm(species_type species)
@@ -453,7 +453,7 @@ namespace species
         {
         case EQ_LEFT_RING:
         case EQ_RIGHT_RING:
-            return arms > 2;
+            return arms > 2 || arms == 0;
         case EQ_RING_ONE:
         case EQ_RING_TWO:
         case EQ_RING_THREE:
