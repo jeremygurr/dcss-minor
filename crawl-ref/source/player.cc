@@ -2387,6 +2387,22 @@ static void _handle_temp_mutation(int exp)
         temp_mutation_wanes();
 }
 
+/// update hydra heads
+static void _handle_hydra_heads(int exp)
+{
+    if (you.experience_level == you.props[NUM_HEADS_KEY]) return;
+
+    if (you.experience_level > you.props[NUM_HEADS_KEY]) {
+      if (x_chance_in_y(1, 3)) {
+        you.props[NUM_HEADS_KEY]++;
+      }
+    } else {
+      if (x_chance_in_y(1, 10)) {
+        you.props[NUM_HEADS_KEY]--;
+      }
+    }
+}
+
 /// update stat loss
 static void _handle_stat_loss(int exp)
 {
@@ -2489,6 +2505,9 @@ void apply_exp()
         skill_xp = sprint_modify_exp(skill_xp);
 
     // xp-gated effects that use sprint inflation
+    if (you.species == SP_HYDRA) {
+      _handle_hydra_heads(skill_xp);
+    }
     _handle_stat_loss(skill_xp);
     _handle_temp_mutation(skill_xp);
     _recharge_xp_evokers(skill_xp);
