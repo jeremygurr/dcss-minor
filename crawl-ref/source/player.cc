@@ -2390,17 +2390,25 @@ static void _handle_temp_mutation(int exp)
 /// update hydra heads
 static void _handle_hydra_heads(int exp)
 {
-    if (you.experience_level == you.props[NUM_HEADS_KEY]) return;
+    dprf("Calling _handle_hydra_heads, previous heads: %d", you.props[NUM_HEADS_KEY].get_int());
+    if (you.experience_level == you.props[NUM_HEADS_KEY].get_int()) return;
 
-    if (you.experience_level > you.props[NUM_HEADS_KEY]) {
+    if (you.experience_level > you.props[NUM_HEADS_KEY].get_int()) {
       if (x_chance_in_y(1, 3)) {
+        dprf("Increased heads");
         you.props[NUM_HEADS_KEY]++;
       }
     } else {
       if (x_chance_in_y(1, 10)) {
+        dprf("Decreased heads");
         you.props[NUM_HEADS_KEY]--;
       }
     }
+    dprf("new heads: %d", you.props[NUM_HEADS_KEY].get_int());
+    you.gear_change = true;
+    you.props[REFRESH_BASE_TILE_KEY] = true;
+    redraw_screen();
+    update_screen();
 }
 
 /// update stat loss
@@ -5114,6 +5122,7 @@ player::player()
 
     props.clear();
     props[NUM_HEADS_KEY] = 1;
+    props[REFRESH_BASE_TILE_KEY] = false;
 
     beholders.clear();
     fearmongers.clear();
