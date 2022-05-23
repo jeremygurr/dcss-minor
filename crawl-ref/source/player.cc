@@ -2391,25 +2391,24 @@ static void _handle_temp_mutation(int exp)
 /// update hydra heads
 static void _handle_hydra_heads(int exp)
 {
-    dprf("Calling _handle_hydra_heads, previous heads: %d", you.props[NUM_HEADS_KEY].get_int());
     if (you.experience_level == you.props[NUM_HEADS_KEY].get_int()) return;
 
     if (you.experience_level > you.props[NUM_HEADS_KEY].get_int()) {
       if (x_chance_in_y(1, 3)) {
-        dprf("Increased heads");
         you.props[NUM_HEADS_KEY]++;
+#ifdef USE_TILE
+        init_player_doll();
+#endif
       }
     } else {
       if (x_chance_in_y(1, 10)) {
-        dprf("Decreased heads");
         you.props[NUM_HEADS_KEY]--;
+#ifdef USE_TILE
+        init_player_doll();
+#endif
       }
     }
-    dprf("new heads: %d", you.props[NUM_HEADS_KEY].get_int());
 
-#ifdef USE_TILE
-    init_player_doll();
-#endif
 }
 
 /// update stat loss
