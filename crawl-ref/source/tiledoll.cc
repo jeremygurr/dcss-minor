@@ -375,9 +375,8 @@ void fill_doll_equipment(dolls_data &result)
     }
 
     // Base tile.
-    if (result.parts[TILEP_PART_BASE] == TILEP_SHOW_EQUIP || you.props[REFRESH_BASE_TILE_KEY].get_bool()) {
+    if (result.parts[TILEP_PART_BASE] == TILEP_SHOW_EQUIP) {
         tilep_race_default(you.species, you.experience_level, &result);
-        you.props[REFRESH_BASE_TILE_KEY] = false;
     }
 
     // Main hand.

@@ -54,7 +54,6 @@
 #define FROZEN_RAMPARTS_KEY "frozen_ramparts_position"
 #define PALENTONGA_CURL_KEY "palentonga_curl"
 #define NUM_HEADS_KEY "num_heads"
-#define REFRESH_BASE_TILE_KEY "refresh_base_tile"
 
 // display/messaging breakpoints for penalties from Ru's MUT_HORROR
 #define HORROR_LVL_EXTREME  3
