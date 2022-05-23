@@ -532,7 +532,8 @@ public:
     bool is_skeletal() const override;
 
     bool tengu_flight() const;
-    int heads() const override { return 1; }
+    int heads() const override;
+    void set_player_heads(int heads) const;
 
     bool spellcasting_unholy() const;
 
