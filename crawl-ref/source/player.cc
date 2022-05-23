@@ -2400,19 +2400,19 @@ static void _handle_temp_mutation(int exp)
 }
 
 /// update hydra heads
-static void _handle_hydra_heads(int exp)
+static void _handle_hydra_heads()
 {
     if (you.experience_level == you.heads()) return;
 
     if (you.experience_level > you.heads()) {
-      if (x_chance_in_y(1, 3)) {
+      if (x_chance_in_y(1, 5)) {
         you.set_player_heads(you.heads()+1);
 #ifdef USE_TILE
         init_player_doll();
 #endif
       }
     } else {
-      if (x_chance_in_y(1, 10)) {
+      if (x_chance_in_y(1, 20)) {
         you.set_player_heads(you.heads()-1);
 #ifdef USE_TILE
         init_player_doll();
@@ -2525,7 +2525,7 @@ void apply_exp()
 
     // xp-gated effects that use sprint inflation
     if (you.species == SP_HYDRA) {
-      _handle_hydra_heads(skill_xp);
+      _handle_hydra_heads();
     }
     _handle_stat_loss(skill_xp);
     _handle_temp_mutation(skill_xp);
