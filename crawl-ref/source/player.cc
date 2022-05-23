@@ -1000,6 +1000,17 @@ int player::wearing_ego(equipment_type slot, int special) const
     return ret;
 }
 
+int player::heads() const
+{
+    if (props.exists(NUM_HEADS_KEY))
+        return props[NUM_HEADS_KEY].get_int();
+    return 1; // not actually always true
+}
+
+void player::set_player_heads(int heads) const {
+  you.props[NUM_HEADS_KEY] = heads;
+}
+
 // Returns true if the indicated unrandart is equipped
 bool player_equip_unrand(int unrand_index, bool include_melded)
 {
@@ -2404,18 +2415,18 @@ static void _handle_temp_mutation(int exp)
 /// update hydra heads
 static void _handle_hydra_heads(int exp)
 {
-    if (you.experience_level == you.props[NUM_HEADS_KEY].get_int()) return;
+    if (you.experience_level == you.heads()) return;
 
-    if (you.experience_level > you.props[NUM_HEADS_KEY].get_int()) {
+    if (you.experience_level > you.heads()) {
       if (x_chance_in_y(1, 3)) {
-        you.props[NUM_HEADS_KEY]++;
+        you.set_player_heads(you.heads()+1);
 #ifdef USE_TILE
         init_player_doll();
 #endif
       }
     } else {
       if (x_chance_in_y(1, 10)) {
-        you.props[NUM_HEADS_KEY]--;
+        you.set_player_heads(you.heads()-1);
 #ifdef USE_TILE
         init_player_doll();
 #endif
@@ -5150,7 +5161,6 @@ player::player()
 
     props.clear();
     props[NUM_HEADS_KEY] = 1;
-    props[REFRESH_BASE_TILE_KEY] = false;
 
     beholders.clear();
     fearmongers.clear();
