@@ -82,6 +82,7 @@
 #include "terrain.h"
 #ifdef USE_TILE
  #include "tilepick.h"
+ #include "tilepick-p.h"
  #include "tileview.h"
 #endif
 #include "transform.h"
@@ -2418,10 +2419,10 @@ static void _handle_hydra_heads(int exp)
       }
     }
     dprf("new heads: %d", you.props[NUM_HEADS_KEY].get_int());
-    you.gear_change = true;
-    you.props[REFRESH_BASE_TILE_KEY] = true;
-    redraw_screen();
-    update_screen();
+
+#ifdef USE_TILE
+    init_player_doll();
+#endif
 }
 
 /// update stat loss
