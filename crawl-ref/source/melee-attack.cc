@@ -3443,7 +3443,8 @@ void melee_attack::cleave_setup()
     get_cleave_targets(*attacker, defender->pos(), cleave_targets,
                        attack_number);
     // We're already attacking this guy.
-    cleave_targets.pop_front();
+    if (cleave_targets.size() > 0) 
+      cleave_targets.pop_front();
 }
 
 // cleave damage modifier for additional attacks: 70% of base damage
