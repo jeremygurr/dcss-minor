@@ -6941,6 +6941,8 @@ bool player::has_usable_offhand() const
         return false;
     if (shield())
         return false;
+    if (you.species == SP_HYDRA) 
+        return false;
 
     const item_def* wp = slot_item(EQ_WEAPON);
     return !wp || hands_reqd(*wp) != HANDS_TWO;
