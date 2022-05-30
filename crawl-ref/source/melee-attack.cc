@@ -1842,8 +1842,9 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
         return false;
 
     // What's the largest number of heads the defender can have?
-    const int limit = defender->type == MONS_LERNAEAN_HYDRA ? 27
-                                                            : MAX_HYDRA_HEADS;
+    int limit = MAX_HYDRA_HEADS;
+    if (defender->type == MONS_LERNAEAN_HYDRA) limit = 27;
+    else if (defender->is_player()) limit = 30; 
 
     if (attacker->damage_brand() == SPWPN_FLAMING)
     {
@@ -1856,8 +1857,14 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
     if (heads >= limit - 1)
         return false; // don't overshoot the head limit!
 
-    simple_monster_message(*defender->as_monster(), " grows two more!");
-    defender->as_monster()->num_heads += 2;
+    if (defender->is_player()) {
+      const string defname = defender->name(DESC_THE);
+      mprf("%s grows two more!", defname.c_str());
+      defender->as_player()->set_player_heads(defender->heads() + 2);
+    } else {
+      simple_monster_message(*defender->as_monster(), " grows two more!");
+      defender->as_monster()->num_heads += 2;
+    }
     defender->heal(8 + random2(8));
 
     return false;
@@ -1874,7 +1881,8 @@ static bool actor_can_lose_heads(const actor* defender)
     if (defender->is_monster()
         && defender->as_monster()->has_hydra_multi_attack()
         && defender->as_monster()->mons_species() != MONS_SPECTRAL_THING
-        && defender->as_monster()->mons_species() != MONS_SERPENT_OF_HELL)
+        && defender->as_monster()->mons_species() != MONS_SERPENT_OF_HELL
+        || defender->is_player() && you.species == SP_HYDRA)
     {
         return true;
     }
@@ -1940,9 +1948,6 @@ bool melee_attack::attack_chops_heads(int dam, int dam_type)
  */
 void melee_attack::decapitate(int dam_type)
 {
-    // Player hydras don't gain or lose heads.
-    ASSERT(defender->is_monster());
-
     const char *verb = nullptr;
 
     if (dam_type == DVORP_CLAWING)
@@ -1973,7 +1978,7 @@ void melee_attack::decapitate(int dam_type)
         if (!defender->is_summoned())
         {
             bleed_onto_floor(defender->pos(), defender->type,
-                             defender->as_monster()->hit_points, true);
+                             defender->stat_hp(), true);
         }
 
         if (!simu)
@@ -1990,7 +1995,11 @@ void melee_attack::decapitate(int dam_type)
              apostrophise(defender_name(true)).c_str());
     }
 
-    defender->as_monster()->num_heads--;
+    if (defender->is_player()) {
+      defender->as_player()->set_player_heads(defender->heads() - 1);
+    } else {
+      defender->as_monster()->num_heads--;
+    }
 }
 
 /**
