@@ -2420,7 +2420,7 @@ static void _handle_hydra_heads()
     if (!diff) return;
 
     if (diff > 0) {
-      if (diff > 19 || x_chance_in_y(diff, 20)) {
+      if (diff > 9 || x_chance_in_y(diff, 10)) {
         you.set_player_heads(you.heads() + 1);
         mprf(MSGCH_INTRINSIC_GAIN, "Gained a head.");
         you.wield_change = true;
@@ -2429,7 +2429,7 @@ static void _handle_hydra_heads()
 #endif
       }
     } else {
-      if (-diff > 19 || x_chance_in_y(-diff, 20)) {
+      if (-diff > 9 || x_chance_in_y(-diff, 10)) {
         you.set_player_heads(you.heads() - 1);
         mprf(MSGCH_MUTATION, "Lost a head.");
         you.wield_change = true;
