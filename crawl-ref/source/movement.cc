@@ -970,6 +970,11 @@ void move_player_action(coord_def move)
         targ_monst = nullptr;
     }
 
+    if (you.species == SP_HYDRA && targ_monst && hydra_passthrough_class(targ_monst->type)) {
+      monster_die(*targ_monst, &you);
+      targ_monst = nullptr;
+    }
+
     bool targ_pass = you.can_pass_through(targ) && !you.is_stationary();
 
     if (you.digging)
@@ -1242,3 +1247,12 @@ void move_player_action(coord_def move)
     if (!attacking && moving && !did_wu_jian_attack)
         update_acrobat_status();
 }
+
+bool hydra_passthrough_class(const monster_type mc)
+{
+    return mons_class_is_plant(mc)
+           && mons_class_is_stationary(mc)
+           && mc != MONS_SNAPLASHER_VINE
+           && mc != MONS_SNAPLASHER_VINE_SEGMENT;
+}
+
