@@ -1874,7 +1874,7 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
       const string defname = defender->name(DESC_THE);
       defender->as_player()->set_player_heads(defender->heads() + 2);
       mprf("%s grows two more!", defname.c_str());
-      you.wield_change = true
+      you.wield_change = true;
     } else {
       simple_monster_message(*defender->as_monster(), " grows two more!");
       defender->as_monster()->num_heads += 2;
