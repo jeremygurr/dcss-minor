@@ -2845,22 +2845,16 @@ void level_change(bool skip_attribute_increase)
                 break;
 
             case SP_HYDRA:
-                if (you.heads() < you.experience_level)
-                {
-                    if (you.heads() + 1 < you.experience_level) 
+                const int target = you.experience_level + 2;
+                if (you.heads() < target)
                     {
-                      mprf(MSGCH_INTRINSIC_GAIN, "Gained some heads.");
-                    }
-                    else
-                    {
-                      mprf(MSGCH_INTRINSIC_GAIN, "Gained a heads");
-                    }
-                    you.set_player_heads(you.experience_level);
-                    you.wield_change = true;
+                        mprf(MSGCH_INTRINSIC_GAIN, "You feel a surge of regenerative energy.");
+                        you.set_player_heads(target);
+                        you.wield_change = true;
 #ifdef USE_TILE
-                    init_player_doll();
+                        init_player_doll();
 #endif
-                }
+                    }
                 break;
 
             case SP_BASE_DRACONIAN:
