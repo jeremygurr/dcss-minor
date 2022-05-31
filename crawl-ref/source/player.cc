@@ -7191,7 +7191,7 @@ bool player::can_drink(bool temp) const
 
 }
 
-bool player::can_read(bool temp) const
+bool player::can_read() const
 {
     return you.species != SP_HYDRA;
 
