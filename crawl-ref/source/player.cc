@@ -2415,7 +2415,7 @@ static void _handle_temp_mutation(int exp)
 /// update hydra heads
 static void _handle_hydra_heads()
 {
-    const int head_target = (you.experience_level / 4) + 2;
+    const int head_target = ((you.experience_level + 1) / 4) + 2;
     if (head_target == you.heads()) return;
 
     if (head_target > you.heads()) {
