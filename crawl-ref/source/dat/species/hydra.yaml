@@ -6,6 +6,8 @@ adjective: Hydroid
 genus: Hydra
 difficulty: Advanced
 difficulty_priority: 90
+species_flags:
+  - SPF_BARDING
 aptitudes:
   xp: -8
   hp: 2
@@ -21,7 +23,7 @@ aptitudes:
   bows: False
   crossbows: False
   throwing: False
-  armour: False
+  armour: -2
   dodging: -3
   stealth: -4
   shields: False
