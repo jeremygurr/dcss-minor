@@ -44,7 +44,7 @@ static const sacrifice_def sac_data[] =
   30,
   SK_NONE,
   nullptr,
-  nullptr,
+  []() { return you.species != SP_HYDRA; },
 },
 
 { ABIL_RU_SACRIFICE_DRINK, MUT_DRINK_SAFETY,
