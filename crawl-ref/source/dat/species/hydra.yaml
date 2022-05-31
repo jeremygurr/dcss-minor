@@ -13,18 +13,18 @@ aptitudes:
   mr: 2
   short_blades: False
   long_blades: False
-  axes: -1
-  maces_and_flails: -1
+  axes: False
+  maces_and_flails: False
   polearms: -1
   staves: False
   slings: False
   bows: False
   crossbows: False
   throwing: False
-  armour: -1
+  armour: False
   dodging: -3
   stealth: -4
-  shields: -1
+  shields: False
   spellcasting: -4
   conjurations: -2
   hexes: -2
