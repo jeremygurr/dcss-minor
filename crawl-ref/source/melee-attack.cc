@@ -1884,8 +1884,8 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
     } else {
       simple_monster_message(*defender->as_monster(), " grows two more!");
       defender->as_monster()->num_heads += 2;
+      defender->heal(8 + random2(8));
     }
-    defender->heal(8 + random2(8));
 
     return false;
 }
