@@ -1486,6 +1486,18 @@ void melee_attack::set_attack_verb(int damage)
     if (!attacker->is_player())
         return;
 
+    if (you.species == SP_HYDRA) {
+        if (damage < HIT_WEAK)
+            attack_verb = "nip";
+        else if (damage < HIT_MED)
+            attack_verb = "bite";
+        else if (damage < HIT_STRONG)
+            attack_verb = "chomp";
+        else
+            attack_verb = "eviscerate";
+        return;
+    }
+
     int weap_type = WPN_UNKNOWN;
 
     if (Options.has_fake_lang(flang_t::grunt))
