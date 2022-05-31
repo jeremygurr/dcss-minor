@@ -8,8 +8,8 @@ difficulty: Advanced
 difficulty_priority: 90
 aptitudes:
   xp: -8
-  hp: 0
-  mp_mod: 0
+  hp: 2
+  mp_mod: 2
   mr: 2
   short_blades: False
   long_blades: False
