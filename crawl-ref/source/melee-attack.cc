@@ -606,6 +606,7 @@ bool melee_attack::handle_phase_aux()
     if (attacker->is_player()
         && !cleaving
         && wu_jian_attack != WU_JIAN_ATTACK_TRIGGERED_AUX
+        && effective_attack_number == 0
         && !is_projected)
     {
         // returns whether an aux attack successfully took place
