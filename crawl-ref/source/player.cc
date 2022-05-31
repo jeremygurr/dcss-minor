@@ -2415,11 +2415,12 @@ static void _handle_temp_mutation(int exp)
 /// update hydra heads
 static void _handle_hydra_heads()
 {
-    const int head_target = ((you.experience_level + 1) / 4) + 2;
-    if (head_target == you.heads()) return;
+    const int head_target = ((you.experience_level + 3) / 5) + 2;
+    const int diff = head_target - you.heads();
+    if (!diff) return;
 
-    if (head_target > you.heads()) {
-      if (x_chance_in_y(1, 10)) {
+    if (diff > 0) {
+      if (diff > 19 || x_chance_in_y(diff, 20)) {
         you.set_player_heads(you.heads() + 1);
         mprf(MSGCH_INTRINSIC_GAIN, "Gained a head.");
         you.wield_change = true;
@@ -2428,7 +2429,7 @@ static void _handle_hydra_heads()
 #endif
       }
     } else {
-      if (x_chance_in_y(1, 10)) {
+      if (-diff > 19 || x_chance_in_y(-diff, 20)) {
         you.set_player_heads(you.heads() - 1);
         mprf(MSGCH_MUTATION, "Lost a head.");
         you.wield_change = true;
