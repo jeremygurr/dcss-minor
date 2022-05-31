@@ -48,6 +48,9 @@
 #include "unwind.h"
 #include "view.h"
 #include "xom.h"
+#ifdef USE_TILE
+ #include "tiledoll.h"
+#endif
 
 #ifdef NOTE_DEBUG_CHAOS_BRAND
     #define NOTE_DEBUG_CHAOS_EFFECTS
