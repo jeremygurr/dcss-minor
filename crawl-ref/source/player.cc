@@ -2408,7 +2408,7 @@ static void _handle_hydra_heads()
     if (head_target > you.heads()) {
       if (x_chance_in_y(1, 5)) {
         you.set_player_heads(you.heads() + 1);
-        mprf(MSGCH_INTRINSIC_GAIN, "Gained a head.");
+        mprf(MSGCH_INTRINSIC_GAIN, "Gained a head (%d total).", you.heads());
 #ifdef USE_TILE
         init_player_doll();
 #endif
@@ -2416,7 +2416,7 @@ static void _handle_hydra_heads()
     } else {
       if (x_chance_in_y(1, 20)) {
         you.set_player_heads(you.heads() - 1);
-        mprf(MSGCH_MUTATION, "Lost a head.");
+        mprf(MSGCH_MUTATION, "Lost a head (%d remaining).", you.heads());
 #ifdef USE_TILE
         init_player_doll();
 #endif

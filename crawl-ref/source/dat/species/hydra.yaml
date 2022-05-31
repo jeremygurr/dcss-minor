@@ -7,7 +7,7 @@ genus: Hydra
 difficulty: Advanced
 difficulty_priority: 90
 aptitudes:
-  xp: -4
+  xp: -8
   hp: 4
   mp_mod: 0
   mr: 2
@@ -39,9 +39,9 @@ aptitudes:
   invocations: 2
 size: giant
 can_swim: true
-str: 10
+str: 6
 int: 6
-dex: 10
+dex: 6
 levelup_stat_frequency: 1
 levelup_stats:
   - str
