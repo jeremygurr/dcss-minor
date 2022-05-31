@@ -1872,8 +1872,8 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
 
     if (defender->is_player()) {
       const string defname = defender->name(DESC_THE);
-      mprf("%s grows two more!", defname.c_str());
       defender->as_player()->set_player_heads(defender->heads() + 2);
+      mprf("%s grows two more! (%d total)", defname.c_str(), defender->heads());
     } else {
       simple_monster_message(*defender->as_monster(), " grows two more!");
       defender->as_monster()->num_heads += 2;
@@ -2002,10 +2002,12 @@ void melee_attack::decapitate(int dam_type)
 
     if (defender_visible)
     {
-        mprf("%s %s one of %s heads off!",
+        mprf("%s %s one of %s heads off (%d left)!",
              atk_name(DESC_THE).c_str(),
              attacker->conj_verb(verb).c_str(),
-             apostrophise(defender_name(true)).c_str());
+             apostrophise(defender_name(true)).c_str(),
+             defender->heads()
+             );
     }
 
     if (defender->is_player()) {
