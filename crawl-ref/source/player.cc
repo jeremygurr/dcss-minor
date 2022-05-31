@@ -2834,6 +2834,7 @@ void level_change(bool skip_attribute_increase)
             if (!skip_attribute_increase)
                 species_stat_gain(you.species);
 
+            const int hydra_head_target = you.experience_level + 2;
             switch (you.species)
             {
             case SP_NAGA:
@@ -2845,11 +2846,10 @@ void level_change(bool skip_attribute_increase)
                 break;
 
             case SP_HYDRA:
-                const int target = you.experience_level + 2;
-                if (you.heads() < target)
+                if (you.heads() < hydra_head_target)
                     {
                         mprf(MSGCH_INTRINSIC_GAIN, "You feel a surge of regenerative energy.");
-                        you.set_player_heads(target);
+                        you.set_player_heads(hydra_head_target);
                         you.wield_change = true;
 #ifdef USE_TILE
                         init_player_doll();
