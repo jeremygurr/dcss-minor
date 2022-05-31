@@ -285,7 +285,7 @@ bool fight_melee(actor *attacker, actor *defender, bool *did_hit, bool simu)
             return true; // Is this right? We did take time, but we didn't melee
         }
 
-        const int nrounds = you.species == SP_HYDRA 
+        const int nrounds = you.species == SP_HYDRA && you.form == transformation::none
             ? attacker->heads()
             : 1;
         int effective_attack_number = 0;
