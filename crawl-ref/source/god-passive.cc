@@ -1379,7 +1379,11 @@ static int _wu_jian_number_of_attacks(bool wall_jump)
         attack_delay = you.attack_delay().roll();
     }
 
-    return div_rand_round(wall_jump ? 2 * move_delay : move_delay,
+    int hydra_factor = 1;
+    if (you.species == SP_HYDRA) 
+      hydra_factor = you.heads();
+
+    return div_rand_round((wall_jump ? 2 * move_delay : move_delay) * hydra_factor,
                           attack_delay * BASELINE_DELAY);
 }
 
