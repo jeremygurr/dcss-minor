@@ -2415,18 +2415,21 @@ static void _handle_temp_mutation(int exp)
 /// update hydra heads
 static void _handle_hydra_heads()
 {
-    if (you.experience_level == you.heads()) return;
+    const int head_target = (you.experience_level >> 1) + 2;
+    if (head_target == you.heads()) return;
 
-    if (you.experience_level > you.heads()) {
+    if (head_target > you.heads()) {
       if (x_chance_in_y(1, 5)) {
-        you.set_player_heads(you.heads()+1);
+        you.set_player_heads(you.heads() + 1);
+        mprf(MSGCH_INTRINSIC_GAIN, "Gained a head.");
 #ifdef USE_TILE
         init_player_doll();
 #endif
       }
     } else {
       if (x_chance_in_y(1, 20)) {
-        you.set_player_heads(you.heads()-1);
+        you.set_player_heads(you.heads() - 1);
+        mprf(MSGCH_MUTATION, "Lost a head.");
 #ifdef USE_TILE
         init_player_doll();
 #endif
