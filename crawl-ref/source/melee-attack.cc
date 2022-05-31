@@ -1875,6 +1875,9 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
       defender->as_player()->set_player_heads(defender->heads() + 2);
       mprf("%s grows two more!", defname.c_str());
       you.wield_change = true;
+#ifdef USE_TILE
+      init_player_doll();
+#endif
     } else {
       simple_monster_message(*defender->as_monster(), " grows two more!");
       defender->as_monster()->num_heads += 2;
@@ -2014,6 +2017,9 @@ void melee_attack::decapitate(int dam_type)
     if (defender->is_player()) {
       defender->as_player()->set_player_heads(defender->heads() - 1);
       you.wield_change = true;
+#ifdef USE_TILE
+      init_player_doll();
+#endif
     } else {
       defender->as_monster()->num_heads--;
     }
