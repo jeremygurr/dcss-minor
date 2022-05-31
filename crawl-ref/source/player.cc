@@ -7237,6 +7237,12 @@ bool player::can_drink(bool temp) const
 
 }
 
+bool player::can_read(bool temp) const
+{
+    return you.species != SP_HYDRA;
+
+}
+
 bool player::is_stationary() const
 {
     return form == transformation::tree
