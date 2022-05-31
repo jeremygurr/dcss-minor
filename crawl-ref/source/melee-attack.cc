@@ -1855,8 +1855,9 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
 
     // What's the largest number of heads the defender can have?
     int limit = MAX_HYDRA_HEADS;
-    if (defender->type == MONS_LERNAEAN_HYDRA) limit = 27;
-    else if (defender->is_player()) limit = 30; 
+    if (defender->type == MONS_LERNAEAN_HYDRA 
+        || defender->is_player()) 
+            limit = 27;
 
     if (attacker->damage_brand() == SPWPN_FLAMING)
     {
@@ -1872,7 +1873,7 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
     if (defender->is_player()) {
       const string defname = defender->name(DESC_THE);
       defender->as_player()->set_player_heads(defender->heads() + 2);
-      mprf("%s grows two more! (%d total)", defname.c_str(), defender->heads());
+      mprf("%s grows two more!", defname.c_str(), defender->heads());
     } else {
       simple_monster_message(*defender->as_monster(), " grows two more!");
       defender->as_monster()->num_heads += 2;
