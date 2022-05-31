@@ -2835,6 +2835,25 @@ void level_change(bool skip_attribute_increase)
                 }
                 break;
 
+            case SP_HYDRA:
+                if (you.heads() < you.experience_level)
+                {
+                    if (you.heads() + 1 < you.experience_level) 
+                    {
+                      mprf(MSGCH_INTRINSIC_GAIN, "Gained some heads.");
+                    }
+                    else
+                    {
+                      mprf(MSGCH_INTRINSIC_GAIN, "Gained a heads");
+                    }
+                    you.set_player_heads(you.experience_level);
+                    you.wield_change = true;
+#ifdef USE_TILE
+                    init_player_doll();
+#endif
+                }
+                break;
+
             case SP_BASE_DRACONIAN:
                 if (you.experience_level >= 7)
                 {
