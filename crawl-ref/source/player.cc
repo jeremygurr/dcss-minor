@@ -2409,6 +2409,7 @@ static void _handle_hydra_heads()
       if (x_chance_in_y(1, 5)) {
         you.set_player_heads(you.heads() + 1);
         mprf(MSGCH_INTRINSIC_GAIN, "Gained a head.");
+        wield_change = true;
 #ifdef USE_TILE
         init_player_doll();
 #endif
@@ -2417,6 +2418,7 @@ static void _handle_hydra_heads()
       if (x_chance_in_y(1, 5)) {
         you.set_player_heads(you.heads() - 1);
         mprf(MSGCH_MUTATION, "Lost a head.");
+        wield_change = true;
 #ifdef USE_TILE
         init_player_doll();
 #endif
