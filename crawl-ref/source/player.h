@@ -708,7 +708,7 @@ public:
     bool can_polymorph() const override;
     bool can_bleed(bool allow_tran = true) const override;
     bool can_drink(bool temp = true) const;
-    bool can_read(bool temp = true) const;
+    bool can_read() const;
     bool is_stationary() const override;
     bool malmutate(const string &reason) override;
     bool polymorph(int pow, bool allow_immobile = true) override;
