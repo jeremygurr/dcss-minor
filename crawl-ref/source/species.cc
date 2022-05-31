@@ -421,7 +421,7 @@ namespace species
             return "paw";
         else if (mutation_level(species, MUT_TENTACLE_ARMS))
             return "tentacle";
-        else if (mutation_level(species, MUT_CLAWS))
+        else if (mutation_level(species, MUT_CLAWS) || species == SP_HYDRA)
             return "claw"; // overridden for felids by first check
         else
             return "hand";
