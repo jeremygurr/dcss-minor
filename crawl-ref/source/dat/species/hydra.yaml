@@ -54,6 +54,7 @@ mutations:
     MUT_NO_GRASPING: 1
     MUT_NO_ARMOUR: 1
     MUT_COLD_BLOODED: 1
+    MUT_NO_ARTIFICE: 1
 recommended_jobs:
   - JOB_GLADIATOR
   - JOB_FIGHTER
