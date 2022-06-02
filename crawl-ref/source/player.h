@@ -54,6 +54,9 @@
 #define FROZEN_RAMPARTS_KEY "frozen_ramparts_position"
 #define PALENTONGA_CURL_KEY "palentonga_curl"
 #define NUM_HEADS_KEY "num_heads"
+#define EXTRA_AMULETS_KEY "extra_amulets"
+#define EXTRA_SCARVES_KEY "extra_scarves"
+#define EXTRA_HATS_KEY "extra_hats"
 
 // display/messaging breakpoints for penalties from Ru's MUT_HORROR
 #define HORROR_LVL_EXTREME  3
@@ -660,6 +663,7 @@ public:
         override;
     int wearing_ego(equipment_type slot, int type) const
         override;
+    virtual bool wearing_artefact(int artifact) const;
     int scan_artefacts(artefact_prop_type which_property,
                        vector<const item_def *> *matches = nullptr) const override;
 

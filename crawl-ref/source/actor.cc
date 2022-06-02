@@ -206,8 +206,13 @@ void actor::shield_block_succeeded()
 
 int actor::inaccuracy() const
 {
-    const item_def *amu = slot_item(EQ_AMULET);
-    return amu && is_unrandom_artefact(*amu, UNRAND_AIR);
+    if (is_monster())
+    {
+        const item_def *amu = slot_item(EQ_AMULET);
+        return amu && is_unrandom_artefact(*amu, UNRAND_AIR);
+    }
+
+    return as_player()->wearing_artefact(UNRAND_AIR);
 }
 
 bool actor::res_corr(bool /*allow_random*/, bool temp) const

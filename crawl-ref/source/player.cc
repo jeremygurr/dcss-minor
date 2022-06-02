@@ -911,6 +911,15 @@ int player::wearing(equipment_type slot, int sub_type) const
         {
             ret++;
         }
+        if (you.species == SP_HYDRA) 
+        {
+          CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+          for (item_def &i : amulets)
+          {
+              if (i.sub_type == sub_type)
+                  ret++;
+          }
+        }
         break;
 
     case EQ_RINGS:
@@ -973,6 +982,7 @@ int player::wearing_ego(equipment_type slot, int special) const
         break;
 
     case EQ_ALL_ARMOUR:
+        {
         // Check all armour slots:
         for (int i = EQ_MIN_ARMOUR; i <= EQ_MAX_ARMOUR; i++)
         {
@@ -982,7 +992,22 @@ int player::wearing_ego(equipment_type slot, int special) const
                 ret++;
             }
         }
+
+        CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
+        for (item_def &i : scarves)
+        {
+            if (get_armour_ego_type(i) == special)
+                ret++;
+        }
+
+        CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
+        for (item_def &i : hats)
+        {
+            if (get_armour_ego_type(i) == special)
+                ret++;
+        }
         break;
+        }
 
     default:
         if (slot < EQ_MIN_ARMOUR || slot > EQ_MAX_ARMOUR)
@@ -997,6 +1022,47 @@ int player::wearing_ego(equipment_type slot, int special) const
     }
 
     return ret;
+}
+
+bool player::wearing_artefact(int artefact) const
+{
+    for (int i = EQ_FIRST_EQUIP; i < NUM_EQUIP; ++i)
+    {
+        if (melded[i] || equip[i] == -1)
+            continue;
+
+        const int eq = equip[i];
+        const item_def &item = inv[eq];
+
+        if (is_unrandom_artefact(item, artefact))
+            return true;
+    }
+
+    if (you.species == SP_HYDRA)
+    {
+        CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+        for (item_def &item : amulets)
+        {
+            if (is_unrandom_artefact(item, artefact))
+                return true;
+        }
+
+        CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
+        for (item_def &item : scarves)
+        {
+            if (is_unrandom_artefact(item, artefact))
+                return true;
+        }
+
+        CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
+        for (item_def &item : hats)
+        {
+            if (is_unrandom_artefact(item, artefact))
+                return true;
+        }
+    }
+
+    return false;
 }
 
 int player::heads() const
@@ -3559,6 +3625,51 @@ int player::scan_artefacts(artefact_prop_type which_property,
             matches->push_back(&item);
     }
 
+    if (you.species == SP_HYDRA)
+    {
+        CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+        for (item_def &item : amulets)
+        {
+            int val = 0;
+
+            if (is_artefact(item))
+                val = artefact_property(item, which_property);
+
+            retval += val;
+
+            if (matches && val)
+                matches->push_back(&item);
+        }
+
+        CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
+        for (item_def &item : scarves)
+        {
+            int val = 0;
+
+            if (is_artefact(item))
+                val = artefact_property(item, which_property);
+
+            retval += val;
+
+            if (matches && val)
+                matches->push_back(&item);
+        }
+
+        CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
+        for (item_def &item : hats)
+        {
+            int val = 0;
+
+            if (is_artefact(item))
+                val = artefact_property(item, which_property);
+
+            retval += val;
+
+            if (matches && val)
+                matches->push_back(&item);
+        }
+    }
+
     return retval;
 }
 
@@ -5159,6 +5270,9 @@ player::player()
 
     props.clear();
     props[NUM_HEADS_KEY] = 1;
+    props[EXTRA_AMULETS_KEY] = CrawlVector(0, 8);
+    props[EXTRA_SCARVES_KEY] = CrawlVector(0, 8);
+    props[EXTRA_HATS_KEY] = CrawlVector(0, 8);
 
     beholders.clear();
     fearmongers.clear();
