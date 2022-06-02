@@ -11,8 +11,8 @@ species_flags:
 aptitudes:
   xp: -8
   hp: 4
-  mp_mod: 2
-  mr: 2
+  mp_mod: 4
+  mr: 1
   short_blades: False
   long_blades: False
   axes: False
