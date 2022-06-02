@@ -2201,7 +2201,7 @@ int player_shield_class()
 
     if (you.species == SP_HYDRA)
     {
-        shield += you.skill(SK_SHIELDS, 108);
+        shield += you.skill(SK_SHIELDS, 208);
     }
 
     return (shield + 50) / 100;
@@ -2416,7 +2416,7 @@ static void _handle_hydra_heads()
     if (!diff) return;
 
     if (diff > 0) {
-      if (diff > 9 || x_chance_in_y(diff, 10)) {
+      if (diff > 9 || x_chance_in_y(diff + 1, 20)) {
         you.set_player_heads(you.heads() + 1);
         mprf(MSGCH_INTRINSIC_GAIN, "Gained a head.");
         you.wield_change = true;
@@ -2425,7 +2425,7 @@ static void _handle_hydra_heads()
 #endif
       }
     } else {
-      if (-diff > 9 || x_chance_in_y(-diff, 10)) {
+      if (-diff > 9 || x_chance_in_y(-diff + 1, 20)) {
         you.set_player_heads(you.heads() - 1);
         mprf(MSGCH_MUTATION, "Lost a head.");
         you.wield_change = true;
