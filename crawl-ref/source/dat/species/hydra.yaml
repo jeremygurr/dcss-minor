@@ -10,7 +10,7 @@ species_flags:
   - SPF_BARDING
 aptitudes:
   xp: -8
-  hp: 2
+  hp: 4
   mp_mod: 2
   mr: 2
   short_blades: False

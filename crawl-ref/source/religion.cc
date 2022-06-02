@@ -3946,7 +3946,7 @@ static void _join_ru()
 void join_trog_skills()
 {
     if (!you.has_mutation(MUT_DISTRIBUTED_TRAINING))
-        for (int sk = SK_SPELLCASTING; sk <= SK_LAST_MAGIC; ++sk)
+        for (int sk = SK_SPELLCASTING + 1; sk <= SK_LAST_MAGIC; ++sk)
             you.train[sk] = you.train_alt[sk] = TRAINING_DISABLED;
 }
 
