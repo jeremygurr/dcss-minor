@@ -2205,6 +2205,11 @@ int player_shield_class()
     shield += you.wearing(EQ_AMULET, AMU_REFLECTION) * AMU_REFLECT_SH * 100;
     shield += you.scan_artefacts(ARTP_SHIELDING) * 200;
 
+    if (you.species == SP_HYDRA)
+    {
+        shield += you.skill(SK_SHIELDS, 108);
+    }
+
     return (shield + 50) / 100;
 }
 

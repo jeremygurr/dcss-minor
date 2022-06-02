@@ -23,10 +23,10 @@ aptitudes:
   bows: False
   crossbows: False
   throwing: False
-  armour: -2
-  dodging: -3
+  armour: -4
+  dodging: -4
   stealth: -4
-  shields: False
+  shields: -4
   spellcasting: -4
   conjurations: -2
   hexes: -2
