@@ -867,7 +867,7 @@ static bool _level_up_check(skill_type sk, bool simu)
 
 bool is_magic_skill(skill_type sk)
 {
-    return sk > SK_LAST_MUNDANE && sk <= SK_LAST_MAGIC;
+    return sk > SK_SPELLCASTING && sk <= SK_LAST_MAGIC;
 }
 
 int _gnoll_total_skill_cost();
