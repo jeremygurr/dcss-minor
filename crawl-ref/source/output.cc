@@ -35,6 +35,7 @@
 #include "misc.h"
 #include "mutation.h"
 #include "notes.h"
+#include "player.h"
 #include "player-equip.h"
 #include "player-stats.h"
 #include "prompt.h"
@@ -978,11 +979,7 @@ static void _print_stats_wp(int y)
 
     if (you.species == SP_HYDRA) {
       textcolour(HUD_VALUE_COLOUR);
-      if (you.heads() > 1) {
-        CPRINTF("%d heads", you.heads());
-      } else {
-        CPRINTF("1 head");
-      }
+      CPRINTF("%d/%d heads", you.heads(), hydra_head_target());
     } else {
       textcolour(HUD_CAPTION_COLOUR);
       const char slot_letter = you.weapon() ? index_to_letter(you.weapon()->link)
