@@ -3322,6 +3322,40 @@ equipment_type item_equip_slot(const item_def& item)
         if (item.link == you.equip[i])
             return static_cast<equipment_type>(i);
 
+    if (you.species == SP_HYDRA) 
+    {
+        CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+        int c = 0;
+        for (item_def &i : amulets)
+        {
+            if (++c > you.heads()) 
+                break;
+            if (&i == &item)
+                return EQ_AMULET;
+        }
+
+        CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
+        c = 0;
+        for (item_def &i : scarves)
+        {
+            if (++c > you.heads()) 
+                break;
+            if (&i == &item)
+                return EQ_CLOAK;
+        }
+
+        CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
+        c = 0;
+        for (item_def &i : hats)
+        {
+            if (++c > you.heads()) 
+                break;
+            if (&i == &item)
+                return EQ_HELMET;
+        }
+    }
+
+    
     return EQ_NONE;
 }
 

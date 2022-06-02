@@ -911,6 +911,7 @@ int player::wearing(equipment_type slot, int sub_type) const
         {
             ret++;
         }
+
         if (you.species == SP_HYDRA) 
         {
           CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
@@ -920,6 +921,7 @@ int player::wearing(equipment_type slot, int sub_type) const
                   ret++;
           }
         }
+
         break;
 
     case EQ_RINGS:
