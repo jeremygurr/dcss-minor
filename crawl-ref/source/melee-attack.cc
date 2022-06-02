@@ -1880,7 +1880,7 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
         const int head_target = hydra_head_target();
         int over_ratio = you.heads() * 100 / head_target - 100;
         if (over_ratio < 0) over_ratio = 0;
-        int new_heads = 0;
+        int new_heads = 1;
 
         if (x_chance_in_y(50, 100 + over_ratio)) new_heads++;
         if (x_chance_in_y(50, 100 + over_ratio)) new_heads++;
@@ -1888,14 +1888,12 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
         if (x_chance_in_y(50, 100 + over_ratio)) new_heads++;
         if (x_chance_in_y(50, 100 + over_ratio)) new_heads++;
 
-        if (new_heads > 0) {
-            defender->as_player()->set_player_heads(defender->heads() + new_heads);
-            mprf("%s grows %d more!", defname.c_str(), new_heads);
-            you.wield_change = true;
+        defender->as_player()->set_player_heads(defender->heads() + new_heads);
+        mprf("%s grow %d more!", defname.c_str(), new_heads);
+        you.wield_change = true;
 #ifdef USE_TILE
-            init_player_doll();
+        init_player_doll();
 #endif
-      }
     } else {
         simple_monster_message(*defender->as_monster(), " grows two more!");
         defender->as_monster()->num_heads += 2;
