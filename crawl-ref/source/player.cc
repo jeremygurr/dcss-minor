@@ -2417,10 +2417,14 @@ static void _handle_temp_mutation(int exp)
         temp_mutation_wanes();
 }
 
+int hydra_head_target() {
+    return ((you.experience_level + 3) / 5) + 2;
+}
+
 /// update hydra heads
 static void _handle_hydra_heads()
 {
-    const int head_target = ((you.experience_level + 3) / 5) + 2;
+    const int head_target = hydra_head_target();
     const int diff = head_target - you.heads();
     if (!diff) return;
 
