@@ -901,6 +901,27 @@ bool item_is_worn(int inv_slot)
         if (inv_slot == you.equip[i])
             return true;
 
+    if (you.species == SP_HYDRA)
+    {
+        CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
+        int c = 0;
+        for (item_def &i : scarves)
+        {
+            if (++c > you.heads()) 
+                break;
+            if (inv_slot == i.link)
+                return true;
+        }
+        CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
+        c = 0;
+        for (item_def &i : hats)
+        {
+            if (++c > you.heads()) 
+                break;
+            if (inv_slot == i.link)
+                return true;
+        }
+    }
     return false;
 }
 
@@ -1801,6 +1822,144 @@ bool safe_to_remove(const item_def &item, bool quiet)
 // in one of those slots.
 //
 // Does not do amulets.
+static bool _swap_amulets(item_def& to_puton)
+{
+    const int num_amulets = you.heads();
+    int unwanted = 0;
+    int last_inscribed = 0;
+    int cursed = 0;
+    int inscribed = 0;
+    int available = 0;
+    bool all_same = true;
+
+    if (!you_can_wear(EQ_AMULET, true || you.melded[EQ_AMULET])
+    {
+        mpr("You can't wear that in your present form.");
+        return false;
+    }
+
+    item_def* first_amulet = nullptr;
+    CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+    int c = 0;
+    for (item_def &i : amulets)
+    {
+        if (++c > you.heads()) 
+            break;
+        if (&i == (item_def*)&item)
+            return true;
+    }
+    for (auto eq : ring_types)
+    {
+        item_def* ring = you.slot_item(eq, true);
+        if (!you_can_wear(eq, true) || you.melded[eq])
+            melded++;
+        else if (ring != nullptr)
+        {
+            if (first_ring == nullptr)
+                first_ring = ring;
+            else if (all_same)
+            {
+                if (ring->sub_type != first_ring->sub_type
+                    || ring->plus  != first_ring->plus
+                    || is_artefact(*ring) || is_artefact(*first_ring))
+                {
+                    all_same = false;
+                }
+            }
+
+            if (ring->cursed())
+                cursed++;
+            else if (strstr(ring->inscription.c_str(), "=R"))
+            {
+                inscribed++;
+                last_inscribed = you.equip[eq];
+            }
+            else
+            {
+                available++;
+                unwanted = you.equip[eq];
+            }
+        }
+    }
+
+    // If the only swappable rings are inscribed =R, go ahead and use them.
+    if (available == 0 && inscribed > 0)
+    {
+        available += inscribed;
+        unwanted = last_inscribed;
+    }
+
+    // We can't put a ring on, because we're wearing all cursed ones.
+    if (melded == num_rings)
+    {
+        // Shouldn't happen, because hogs and bats can't put on jewellery at
+        // all and thus won't get this far.
+        mpr("You can't wear that in your present form.");
+        return false;
+    }
+    else if (available == 0)
+    {
+        mprf("You're already wearing %s cursed ring%s!%s",
+             number_in_words(cursed).c_str(),
+             (cursed == 1 ? "" : "s"),
+             (cursed > 2 ? " Isn't that enough for you?" : ""));
+        return false;
+    }
+    // The simple case - only one available ring.
+    // If the jewellery_prompt option is true, always allow choosing the
+    // ring slot (even if we still have empty slots).
+    else if (available == 1 && !Options.jewellery_prompt)
+    {
+        if (!_safe_to_remove_or_wear(to_puton, &you.inv[unwanted], false))
+            return false;
+
+        if (!remove_ring(unwanted, false, true))
+            return false;
+    }
+    // We can't put a ring on without swapping - because we found
+    // multiple available rings.
+    else
+    {
+        // Don't prompt if all the rings are the same.
+        if (!all_same || Options.jewellery_prompt)
+            unwanted = _prompt_ring_to_remove();
+
+        if (unwanted == EQ_NONE)
+        {
+            // do this here rather than in remove_ring so that the custom
+            // message is visible.
+            unwanted = prompt_invent_item(
+                    "You're wearing all the rings you can. Remove which one?",
+                    menu_type::invlist, OSEL_UNCURSED_WORN_RINGS, OPER_REMOVE,
+                    invprompt_flag::no_warning | invprompt_flag::hide_known);
+        }
+
+        // Cancelled:
+        if (unwanted < 0)
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
+
+        if (!_safe_to_remove_or_wear(to_puton, &you.inv[unwanted], false))
+            return false;
+
+        if (!remove_ring(unwanted, false, true))
+            return false;
+    }
+
+    // Put on the new ring.
+    start_delay<JewelleryOnDelay>(1, to_puton);
+
+    return true;
+}
+
+// Assumptions:
+// item is an item in inventory or on the floor where the player is standing
+// EQ_LEFT_RING and EQ_RIGHT_RING are both occupied, and item is not
+// in one of those slots.
+//
+// Does not do amulets.
 static bool _swap_rings(item_def& to_puton)
 {
     vector<equipment_type> ring_types = _current_ring_types();
@@ -2102,7 +2261,23 @@ static bool _puton_amulet(item_def &item,
         return false;
     }
 
-    item_def *old_amu = you.slot_item(EQ_AMULET, true);
+    item_def *old_amu = nullptr;
+    if (you.species == SP_HYDRA)
+    {
+      // Check whether there are any unused amulet slots
+      bool need_swap = true;
+      CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+      if (amulets.size() < you.heads()) 
+          need_swap = false;
+
+      // No unused amulet slots. Swap out a worn amulet for the new one.
+      if (need_swap)
+          return _swap_amulets(item);
+    }
+    else
+    {
+        old_amu = you.slot_item(EQ_AMULET, true);
+    }
 
     // Check for stat loss.
     if (!_safe_to_remove_or_wear(item, old_amu, false))
@@ -3754,6 +3929,8 @@ void tile_item_use(int idx)
             break;
         }
     }
+
+    equipped = you.has_equipped(&item);
 
     // Special case for folks who are wielding something
     // that they shouldn't be wielding.
