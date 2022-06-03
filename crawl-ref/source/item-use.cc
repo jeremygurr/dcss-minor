@@ -2046,12 +2046,30 @@ static bool _can_puton_amulet(const item_def &item)
         return false;
     }
 
-    const int existing = you.equip[EQ_AMULET];
-    if (existing != -1 && you.inv[existing].cursed())
+    if (you.species == SP_HYDRA) 
     {
-        mprf("%s is stuck to you!",
-             you.inv[existing].name(DESC_YOUR).c_str());
+        CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+        // deliberately go through all 8 even if we have less heads
+        if (amulets.size() < you.heads()) 
+          return true;
+
+        for (item_def &i : amulets)
+        {
+            if (!i.cursed())
+                return true;
+        }
+
         return false;
+    }
+    else
+    {
+        const int existing = you.equip[EQ_AMULET];
+        if (existing != -1 && you.inv[existing].cursed())
+        {
+            mprf("%s is stuck to you!",
+                 you.inv[existing].name(DESC_YOUR).c_str());
+            return false;
+        }
     }
 
     return true;
