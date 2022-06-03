@@ -883,6 +883,52 @@ bool berserk_check_wielded_weapon()
     return true;
 }
 
+bool player::has_equipped(const item_def* item) const
+{
+    for (int slot = EQ_FIRST_EQUIP; slot < NUM_EQUIP; slot++)
+    {
+        if (item == &inv[slot])
+        {
+            return true;
+        }
+    }
+
+    if (you.species == SP_HYDRA)
+    {
+        CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+        int c = 0;
+        for (item_def &i : amulets)
+        {
+            if (++c > you.heads()) 
+                break;
+            if (&i == (item_def*)&item)
+                return true;
+        }
+
+        CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
+        c = 0;
+        for (item_def &i : scarves)
+        {
+            if (++c > you.heads()) 
+                break;
+            if (&i == (item_def*)&item)
+                return true;
+        }
+
+        CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
+        c = 0;
+        for (item_def &i : hats)
+        {
+            if (++c > you.heads()) 
+                break;
+            if (&i == (item_def*)&item)
+                return true;
+        }
+    }
+
+    return false;
+}
+
 // Looks in equipment "slot" to see if there is an equipped "sub_type".
 // Returns number of matches (in the case of rings, both are checked)
 int player::wearing(equipment_type slot, int sub_type) const

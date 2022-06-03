@@ -2078,7 +2078,7 @@ static bool _can_puton_amulet(const item_def &item)
 static bool _puton_amulet(item_def &item,
                           bool check_for_inscriptions)
 {
-    if (&item == you.slot_item(EQ_AMULET, true))
+    if (you.has_equipped(&item))
     {
         // "Putting on" an equipped item means taking it off.
         if (Options.equip_unequip)

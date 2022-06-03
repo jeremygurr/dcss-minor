@@ -663,7 +663,8 @@ public:
         override;
     int wearing_ego(equipment_type slot, int type) const
         override;
-    virtual bool wearing_artefact(int artifact) const;
+    bool wearing_artefact(int artifact) const;
+    bool has_equipped(const item_def* item) const;
     int scan_artefacts(artefact_prop_type which_property,
                        vector<const item_def *> *matches = nullptr) const override;
 
