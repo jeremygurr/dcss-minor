@@ -914,12 +914,15 @@ int player::wearing(equipment_type slot, int sub_type) const
 
         if (you.species == SP_HYDRA) 
         {
-          CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
-          for (item_def &i : amulets)
-          {
-              if (i.sub_type == sub_type)
-                  ret++;
-          }
+            CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+            int c = 0;
+            for (item_def &i : amulets)
+            {
+                if (++c > you.heads()) 
+                    break;
+                if (i.sub_type == sub_type)
+                    ret++;
+            }
         }
 
         break;
@@ -995,20 +998,29 @@ int player::wearing_ego(equipment_type slot, int special) const
             }
         }
 
-        CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
-        for (item_def &i : scarves)
+        if (you.species == SP_HYDRA) 
         {
-            if (get_armour_ego_type(i) == special)
-                ret++;
-        }
+            CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
+            int c = 0;
+            for (item_def &i : scarves)
+            {
+                if (++c > you.heads()) 
+                    break;
+                if (get_armour_ego_type(i) == special)
+                    ret++;
+            }
 
-        CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
-        for (item_def &i : hats)
-        {
-            if (get_armour_ego_type(i) == special)
-                ret++;
-        }
-        break;
+            CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
+            c = 0;
+            for (item_def &i : hats)
+            {
+                if (++c > you.heads()) 
+                    break;
+                if (get_armour_ego_type(i) == special)
+                    ret++;
+            }
+            break;
+            }
         }
 
     default:
@@ -1043,22 +1055,31 @@ bool player::wearing_artefact(int artefact) const
     if (you.species == SP_HYDRA)
     {
         CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+        int c = 0;
         for (item_def &item : amulets)
         {
+            if (++c > you.heads()) 
+                break;
             if (is_unrandom_artefact(item, artefact))
                 return true;
         }
 
         CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
+        c = 0;
         for (item_def &item : scarves)
         {
+            if (++c > you.heads()) 
+                break;
             if (is_unrandom_artefact(item, artefact))
                 return true;
         }
 
         CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
+        c = 0;
         for (item_def &item : hats)
         {
+            if (++c > you.heads()) 
+                break;
             if (is_unrandom_artefact(item, artefact))
                 return true;
         }
@@ -3630,8 +3651,12 @@ int player::scan_artefacts(artefact_prop_type which_property,
     if (you.species == SP_HYDRA)
     {
         CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+        int c = 0;
         for (item_def &item : amulets)
         {
+            if (++c > you.heads()) 
+                break;
+
             int val = 0;
 
             if (is_artefact(item))
@@ -3644,8 +3669,12 @@ int player::scan_artefacts(artefact_prop_type which_property,
         }
 
         CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
+        c = 0;
         for (item_def &item : scarves)
         {
+            if (++c > you.heads()) 
+                break;
+                
             int val = 0;
 
             if (is_artefact(item))
@@ -3658,8 +3687,12 @@ int player::scan_artefacts(artefact_prop_type which_property,
         }
 
         CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
+        c = 0;
         for (item_def &item : hats)
         {
+            if (++c > you.heads()) 
+                break;
+
             int val = 0;
 
             if (is_artefact(item))

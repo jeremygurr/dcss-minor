@@ -1638,9 +1638,39 @@ bool check_warning_inscriptions(const item_def& item,
             if (!can_wear_armour(item, false, false))
                 return true;
 
-            int equip = you.equip[get_armour_slot(item)];
-            if (equip != -1 && item.link == equip)
-                return check_old_item_warning(item, oper);
+            const int slot = get_armour_slot(item);
+            if (slot == EQ_CLOAK && you.species == SP_HYDRA)
+            {
+                CrawlVector &scarves = you.props[EXTRA_SCARVES_KEY].get_vector();
+                // deliberately go through all 8 even if we have less heads
+                for (item_def &i : scarves)
+                {
+                    if (&i == &item)
+                        return check_old_item_warning(item, oper);
+                }
+
+                return true;
+            }
+            else if (slot == EQ_HELMET && you.species == SP_HYDRA)
+            {
+                CrawlVector &hats = you.props[EXTRA_HATS_KEY].get_vector();
+                // deliberately go through all 8 even if we have less heads
+                for (item_def &i : hats)
+                {
+                    if (&i == &item)
+                        return check_old_item_warning(item, oper);
+                }
+
+                return true;
+            }
+            else 
+            {
+                int equip = you.equip[slot];
+                if (equip != -1 && item.link == equip)
+                {
+                    return check_old_item_warning(item, oper);
+                }
+            }
         }
         else if (oper == OPER_PUTON)
         {
@@ -1649,9 +1679,24 @@ bool check_warning_inscriptions(const item_def& item,
 
             if (jewellery_is_amulet(item))
             {
-                int equip = you.equip[EQ_AMULET];
-                if (equip != -1 && item.link == equip)
-                    return check_old_item_warning(item, oper);
+                if (you.species == SP_HYDRA)
+                {
+                    CrawlVector &amulets = you.props[EXTRA_AMULETS_KEY].get_vector();
+                    // deliberately go through all 8 even if we have less heads
+                    for (item_def &i : amulets)
+                    {
+                        if (&i == &item)
+                            return check_old_item_warning(item, oper);
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    int equip = you.equip[EQ_AMULET];
+                    if (equip != -1 && item.link == equip)
+                        return check_old_item_warning(item, oper);
+                }
             }
             else
             {
