@@ -1878,15 +1878,13 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
     if (defender->is_player()) {
         const string defname = defender->name(DESC_THE);
         const int head_target = hydra_head_target();
-        int over_ratio = you.heads() * 100 / head_target - 100;
-        if (over_ratio < 0) over_ratio = 0;
+        const int high_target = head_target * 3;
         int new_heads = 1;
 
-        if (x_chance_in_y(50, 100 + over_ratio)) new_heads++;
-        if (x_chance_in_y(50, 100 + over_ratio)) new_heads++;
-        if (x_chance_in_y(50, 100 + over_ratio)) new_heads++;
-        if (x_chance_in_y(50, 100 + over_ratio)) new_heads++;
-        if (x_chance_in_y(50, 100 + over_ratio)) new_heads++;
+        if (heads < high_target) {
+          if (x_chance_in_y(high_target - heads, high_target)) new_heads++;
+          if (x_chance_in_y(high_target - heads, high_target)) new_heads++;
+        }
 
         defender->as_player()->set_player_heads(defender->heads() + new_heads);
         mprf("%s grow %d more!", defname.c_str(), new_heads);

@@ -13,6 +13,8 @@ aptitudes:
   hp: 4
   mp_mod: 4
   mr: 1
+  fighting: -4
+  spellcasting: -4
   short_blades: False
   long_blades: False
   axes: False
