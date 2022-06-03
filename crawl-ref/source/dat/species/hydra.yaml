@@ -17,33 +17,19 @@ aptitudes:
   long_blades: False
   axes: False
   maces_and_flails: False
-  polearms: -1
+  polearms: False
   staves: False
   slings: False
   bows: False
   crossbows: False
   throwing: False
-  armour: -4
-  dodging: -4
-  stealth: -4
-  shields: -4
-  spellcasting: -4
-  conjurations: -2
-  hexes: -2
-  translocations: -2
-  transmutations: -2
-  fire_magic: -2
-  ice_magic: -2
-  air_magic: -2
-  earth_magic: -2
-  poison_magic: -2
   evocations: False
   invocations: 2
 size: giant
 can_swim: true
-str: 6
-int: 6
-dex: 6
+str: 8
+int: 4
+dex: 8
 levelup_stat_frequency: 1
 levelup_stats:
   - str

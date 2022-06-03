@@ -2855,12 +2855,14 @@ void level_change(bool skip_attribute_increase)
                 break;
 
             case SP_HYDRA:
-                    mprf(MSGCH_INTRINSIC_GAIN, "You feel a surge of regenerative energy.");
-                    you.set_player_heads(you.heads() + 2);
-                    you.wield_change = true;
+                /*
+                mprf(MSGCH_INTRINSIC_GAIN, "You feel a surge of regenerative energy.");
+                you.set_player_heads(you.heads() + 2);
+                you.wield_change = true;
 #ifdef USE_TILE
-                    init_player_doll();
+                init_player_doll();
 #endif
+                */
                 break;
 
             case SP_BASE_DRACONIAN:

@@ -981,7 +981,7 @@ static void _print_stats_wp(int y)
 
     if (you.species == SP_HYDRA) {
       textcolour(HUD_VALUE_COLOUR);
-      CPRINTF("%d/%d heads", you.heads(), hydra_head_target());
+      CPRINTF("%d/%d heads  ", you.heads(), hydra_head_target());
     } else {
       textcolour(HUD_CAPTION_COLOUR);
       const char slot_letter = you.weapon() ? index_to_letter(you.weapon()->link)
