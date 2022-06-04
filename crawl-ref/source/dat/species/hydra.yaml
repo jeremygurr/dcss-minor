@@ -12,9 +12,9 @@ aptitudes:
   xp: -8
   hp: 4
   mp_mod: 4
-  mr: 1
+  mr: 3
   fighting: -4
-  spellcasting: -4
+  unarmed_combat: -4
   short_blades: False
   long_blades: False
   axes: False
@@ -25,14 +25,19 @@ aptitudes:
   bows: False
   crossbows: False
   throwing: False
+  armour: -4
+  dodging: -4
+  stealth: -4
+  shields: -4
+  spellcasting: -4
   evocations: False
   invocations: 2
 size: giant
 can_swim: true
 str: 8
 int: 4
-dex: 8
-levelup_stat_frequency: 1
+dex: 6
+levelup_stat_frequency: 2
 levelup_stats:
   - str
   - int
