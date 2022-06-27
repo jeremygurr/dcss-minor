@@ -872,7 +872,7 @@ static bool _level_up_check(skill_type sk, bool simu)
 
 bool is_magic_skill(skill_type sk)
 {
-    return sk > SK_LAST_MUNDANE && sk <= SK_LAST_MAGIC;
+    return sk > SK_SPELLCASTING && sk <= SK_LAST_MAGIC;
 }
 
 int _gnoll_total_skill_cost();
@@ -1702,7 +1702,7 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
             break;
 
         case SK_UNARMED_COMBAT:
-            if (species == SP_FELID)
+            if (species == SP_FELID || species == SP_HYDRA)
                 result = claw_and_tooth_titles[skill_rank];
             else if (species == SP_MUMMY && skill_rank == 5)
                 result = "Pharaoh";

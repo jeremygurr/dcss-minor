@@ -48,6 +48,9 @@
 #include "unwind.h"
 #include "view.h"
 #include "xom.h"
+#ifdef USE_TILE
+ #include "tiledoll.h"
+#endif
 
 #ifdef NOTE_DEBUG_CHAOS_BRAND
     #define NOTE_DEBUG_CHAOS_EFFECTS
@@ -594,6 +597,7 @@ bool melee_attack::handle_phase_aux()
     if (attacker->is_player()
         && !cleaving
         && wu_jian_attack != WU_JIAN_ATTACK_TRIGGERED_AUX
+        && effective_attack_number == 0
         && !is_projected)
     {
         // returns whether an aux attack successfully took place
@@ -1480,6 +1484,18 @@ void melee_attack::set_attack_verb(int damage)
     if (!attacker->is_player())
         return;
 
+    if (you.species == SP_HYDRA) {
+        if (damage < HIT_WEAK)
+            attack_verb = "nip";
+        else if (damage < HIT_MED)
+            attack_verb = "bite";
+        else if (damage < HIT_STRONG)
+            attack_verb = "chomp";
+        else
+            attack_verb = "eviscerate";
+        return;
+    }
+
     int weap_type = WPN_UNKNOWN;
 
     if (Options.has_fake_lang(flang_t::grunt))
@@ -1820,8 +1836,10 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
         return false;
 
     // What's the largest number of heads the defender can have?
-    const int limit = defender->type == MONS_LERNAEAN_HYDRA ? 27
-                                                            : MAX_HYDRA_HEADS;
+    int limit = MAX_HYDRA_HEADS;
+    if (defender->type == MONS_LERNAEAN_HYDRA 
+        || defender->is_player()) 
+            limit = 27;
 
     if (attacker->damage_brand() == SPWPN_FLAMING)
     {
@@ -1834,9 +1852,28 @@ bool melee_attack::consider_decapitation(int dam, int damage_type)
     if (heads >= limit - 1)
         return false; // don't overshoot the head limit!
 
-    simple_monster_message(*defender->as_monster(), " grows two more!");
-    defender->as_monster()->num_heads += 2;
-    defender->heal(8 + random2(8));
+    if (defender->is_player()) {
+        const string defname = defender->name(DESC_THE);
+        const int head_target = hydra_head_target();
+        const int high_target = head_target * 3;
+        int new_heads = 1;
+
+        if (heads < high_target) {
+          if (x_chance_in_y(high_target - heads, high_target)) new_heads++;
+          if (x_chance_in_y(high_target - heads, high_target)) new_heads++;
+        }
+
+        defender->as_player()->set_player_heads(defender->heads() + new_heads);
+        mprf("%s grow %d more!", defname.c_str(), new_heads);
+        you.wield_change = true;
+#ifdef USE_TILE
+        init_player_doll();
+#endif
+    } else {
+        simple_monster_message(*defender->as_monster(), " grows two more!");
+        defender->as_monster()->num_heads += 2;
+        defender->heal(8 + random2(8));
+    }
 
     return false;
 }
@@ -1852,7 +1889,8 @@ static bool actor_can_lose_heads(const actor* defender)
     if (defender->is_monster()
         && defender->as_monster()->has_hydra_multi_attack()
         && defender->as_monster()->mons_species() != MONS_SPECTRAL_THING
-        && defender->as_monster()->mons_species() != MONS_SERPENT_OF_HELL)
+        && defender->as_monster()->mons_species() != MONS_SERPENT_OF_HELL
+        || defender->is_player() && you.species == SP_HYDRA)
     {
         return true;
     }
@@ -1918,9 +1956,6 @@ bool melee_attack::attack_chops_heads(int dam, int dam_type)
  */
 void melee_attack::decapitate(int dam_type)
 {
-    // Player hydras don't gain or lose heads.
-    ASSERT(defender->is_monster());
-
     const char *verb = nullptr;
 
     if (dam_type == DVORP_CLAWING)
@@ -1951,7 +1986,7 @@ void melee_attack::decapitate(int dam_type)
         if (!defender->is_summoned())
         {
             bleed_onto_floor(defender->pos(), defender->type,
-                             defender->as_monster()->hit_points, true);
+                             defender->stat_hp(), true);
         }
 
         if (!simu)
@@ -1962,13 +1997,23 @@ void melee_attack::decapitate(int dam_type)
 
     if (defender_visible)
     {
-        mprf("%s %s one of %s heads off!",
+        mprf("%s %s one of %s heads off (%d left)!",
              atk_name(DESC_THE).c_str(),
              attacker->conj_verb(verb).c_str(),
-             apostrophise(defender_name(true)).c_str());
+             apostrophise(defender_name(true)).c_str(),
+             defender->heads()
+             );
     }
 
-    defender->as_monster()->num_heads--;
+    if (defender->is_player()) {
+      defender->as_player()->set_player_heads(defender->heads() - 1);
+      you.wield_change = true;
+#ifdef USE_TILE
+      init_player_doll();
+#endif
+    } else {
+      defender->as_monster()->num_heads--;
+    }
 }
 
 /**
@@ -3414,7 +3459,8 @@ void melee_attack::cleave_setup()
     get_cleave_targets(*attacker, defender->pos(), cleave_targets,
                        attack_number);
     // We're already attacking this guy.
-    cleave_targets.pop_front();
+    if (cleave_targets.size() > 0) 
+      cleave_targets.pop_front();
 }
 
 // cleave damage modifier for additional attacks: 70% of base damage

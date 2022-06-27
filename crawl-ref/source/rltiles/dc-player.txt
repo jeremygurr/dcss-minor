@@ -68,6 +68,11 @@ octopode2
 octopode3
 octopode4
 octopode5
+hydra1 HYDRA
+hydra2
+hydra3
+hydra4
+hydra5
 %rim 0
 djinni_f DJINNI
 djinni_m

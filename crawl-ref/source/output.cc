@@ -35,6 +35,7 @@
 #include "misc.h"
 #include "mutation.h"
 #include "notes.h"
+#include "player.h"
 #include "player-equip.h"
 #include "player-stats.h"
 #include "prompt.h"
@@ -978,15 +979,20 @@ static void _print_stats_wp(int y)
     else
         text = you.unarmed_attack_name();
 
-    textcolour(HUD_CAPTION_COLOUR);
-    const char slot_letter = you.weapon() ? index_to_letter(you.weapon()->link)
-                                          : '-';
-    const string slot_name = make_stringf("%c) ", slot_letter);
-    CPRINTF("%s", slot_name.c_str());
-    textcolour(_wpn_name_colour());
-    const int max_name_width = crawl_view.hudsz.x - slot_name.size();
-    CPRINTF("%s", chop_string(text, max_name_width).c_str());
-    textcolour(LIGHTGREY);
+    if (you.species == SP_HYDRA) {
+      textcolour(HUD_VALUE_COLOUR);
+      CPRINTF("%d/%d heads  ", you.heads(), hydra_head_target());
+    } else {
+      textcolour(HUD_CAPTION_COLOUR);
+      const char slot_letter = you.weapon() ? index_to_letter(you.weapon()->link)
+                                            : '-';
+      const string slot_name = make_stringf("%c) ", slot_letter);
+      CPRINTF("%s", slot_name.c_str());
+      textcolour(_wpn_name_colour());
+      const int max_name_width = crawl_view.hudsz.x - slot_name.size();
+      CPRINTF("%s", chop_string(text, max_name_width).c_str());
+      textcolour(LIGHTGREY);
+    }
 
     you.wield_change  = false;
 }

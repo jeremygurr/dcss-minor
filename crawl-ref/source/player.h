@@ -53,6 +53,7 @@
 #define PETRIFIED_BY_KEY "petrified_by"
 #define FROZEN_RAMPARTS_KEY "frozen_ramparts_position"
 #define PALENTONGA_CURL_KEY "palentonga_curl"
+#define NUM_HEADS_KEY "num_heads"
 
 // display/messaging breakpoints for penalties from Ru's MUT_HORROR
 #define HORROR_LVL_EXTREME  3
@@ -527,7 +528,8 @@ public:
     bool is_skeletal() const override;
 
     bool tengu_flight() const;
-    int heads() const override { return 1; }
+    int heads() const override;
+    void set_player_heads(int heads) const;
 
     bool spellcasting_unholy() const;
 
@@ -706,6 +708,7 @@ public:
     bool can_polymorph() const override;
     bool can_bleed(bool allow_tran = true) const override;
     bool can_drink(bool temp = true) const;
+    bool can_read() const;
     bool is_stationary() const override;
     bool malmutate(const string &reason) override;
     bool polymorph(int pow, bool allow_immobile = true) override;
@@ -1164,3 +1167,5 @@ bool need_expiration_warning(coord_def p = you.pos());
 
 bool player_has_orb();
 bool player_on_orb_run();
+
+int hydra_head_target();
