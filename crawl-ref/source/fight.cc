@@ -309,38 +309,45 @@ bool fight_melee(actor *attacker, actor *defender, bool *did_hit, bool simu)
                 return true;
         }
 
-        melee_attack attk(&you, defender);
-
-        if (simu)
-            attk.simu = true;
-
-        // We're trying to hit a monster, break out of travel/explore now.
-        interrupt_activity(activity_interrupt::hit_monster,
-                           defender->as_monster());
-
-        // Check if the player is fighting with something unsuitable,
-        // or someone unsuitable.
-        if (you.can_see(*defender) && !simu
-            && !wielded_weapon_check(attk.weapon))
+        const int nrounds = you.species == SP_HYDRA && you.form == transformation::none
+            ? attacker->heads()
+            : 1;
+        int effective_attack_number = 0;
+        for (int attack_number = 0; attack_number < nrounds && attacker->alive();
+             ++attack_number, ++effective_attack_number)
         {
-            you.turn_is_over = false;
-            return false;
+          melee_attack attk(&you, defender, attack_number, effective_attack_number);
+
+          if (simu)
+              attk.simu = true;
+
+          // We're trying to hit a monster, break out of travel/explore now.
+          interrupt_activity(activity_interrupt::hit_monster,
+                             defender->as_monster());
+
+          // Check if the player is fighting with something unsuitable,
+          // or someone unsuitable.
+          if (you.can_see(*defender) && !simu
+              && !wielded_weapon_check(attk.weapon))
+          {
+              you.turn_is_over = false;
+              return false;
+          }
+
+          if (!attk.attack())
+          {
+              // Attack was cancelled or unsuccessful...
+              if (attk.cancel_attack)
+                  you.turn_is_over = false;
+              return !attk.cancel_attack;
+          }
+
+          if (did_hit)
+              *did_hit = attk.did_hit;
+
+          if (!simu && will_have_passive(passive_t::shadow_attacks))
+              dithmenos_shadow_melee(defender);
         }
-
-        if (!attk.attack())
-        {
-            // Attack was cancelled or unsuccessful...
-            if (attk.cancel_attack)
-                you.turn_is_over = false;
-            return !attk.cancel_attack;
-        }
-
-        if (did_hit)
-            *did_hit = attk.did_hit;
-
-        if (!simu && will_have_passive(passive_t::shadow_attacks))
-            dithmenos_shadow_melee(defender);
-
         return true;
     }
 
@@ -1290,8 +1297,7 @@ bool weapon_uses_strength(skill_type wpn_skill, bool using_weapon)
     case SK_LONG_BLADES:
     case SK_SHORT_BLADES:
     case SK_STAVES:
-    case SK_BOWS:
-    case SK_SLINGS:
+    case SK_RANGED_WEAPONS:
         return false;
     default:
         return true;

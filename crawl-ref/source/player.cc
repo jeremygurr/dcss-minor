@@ -84,6 +84,7 @@
 #include "terrain.h"
 #ifdef USE_TILE
  #include "tilepick.h"
+ #include "tilepick-p.h"
  #include "tileview.h"
 #endif
 #include "transform.h"
@@ -1000,6 +1001,17 @@ int player::wearing_ego(equipment_type slot, int special) const
     }
 
     return ret;
+}
+
+int player::heads() const
+{
+    if (props.exists(NUM_HEADS_KEY))
+        return props[NUM_HEADS_KEY].get_int();
+    return 1; // not actually always true
+}
+
+void player::set_player_heads(int heads) const {
+  you.props[NUM_HEADS_KEY] = heads;
 }
 
 // Returns true if the indicated unrandart is equipped
@@ -2182,6 +2194,11 @@ int player_shield_class()
     shield += you.wearing(EQ_AMULET, AMU_REFLECTION) * AMU_REFLECT_SH * 100;
     shield += you.scan_artefacts(ARTP_SHIELDING) * 200;
 
+    if (you.species == SP_HYDRA)
+    {
+        shield += you.skill(SK_SHIELDS, 208);
+    }
+
     return (shield + 50) / 100;
 }
 
@@ -2391,6 +2408,39 @@ static void _handle_temp_mutation(int exp)
         temp_mutation_wanes();
 }
 
+int hydra_head_target() {
+    return ((you.experience_level + 3) / 5) + 2;
+}
+
+/// update hydra heads
+static void _handle_hydra_heads()
+{
+    const int head_target = hydra_head_target();
+    const int diff = head_target - you.heads();
+    if (!diff) return;
+
+    if (diff > 0) {
+      if (diff > 9 || x_chance_in_y(diff + 1, 20)) {
+        you.set_player_heads(you.heads() + 1);
+        mprf(MSGCH_INTRINSIC_GAIN, "Gained a head.");
+        you.wield_change = true;
+#ifdef USE_TILE
+        init_player_doll();
+#endif
+      }
+    } else {
+      if (-diff > 9 || x_chance_in_y(-diff + 1, 20)) {
+        you.set_player_heads(you.heads() - 1);
+        mprf(MSGCH_MUTATION, "Lost a head.");
+        you.wield_change = true;
+#ifdef USE_TILE
+        init_player_doll();
+#endif
+      }
+    }
+
+}
+
 /// update stat loss
 static void _handle_stat_loss(int exp)
 {
@@ -2486,6 +2536,9 @@ void apply_exp()
         skill_xp = sprint_modify_exp(skill_xp);
 
     // xp-gated effects that use sprint inflation
+    if (you.species == SP_HYDRA) {
+      _handle_hydra_heads();
+    }
     _handle_stat_loss(skill_xp);
     _handle_temp_mutation(skill_xp);
     _recharge_xp_evokers(skill_xp);
@@ -2790,6 +2843,17 @@ void level_change(bool skip_attribute_increase)
                     mprf(MSGCH_INTRINSIC_GAIN, "Your skin feels tougher.");
                     you.redraw_armour_class = true;
                 }
+                break;
+
+            case SP_HYDRA:
+                /*
+                mprf(MSGCH_INTRINSIC_GAIN, "You feel a surge of regenerative energy.");
+                you.set_player_heads(you.heads() + 2);
+                you.wield_change = true;
+#ifdef USE_TILE
+                init_player_doll();
+#endif
+                */
                 break;
 
             case SP_BASE_DRACONIAN:
@@ -5136,6 +5200,7 @@ player::player()
     quiver_action = quiver::action_cycler();
 
     props.clear();
+    props[NUM_HEADS_KEY] = 1;
 
     beholders.clear();
     fearmongers.clear();
@@ -5828,6 +5893,10 @@ int player::racial_ac(bool temp) const
         {
             return 200 + 100 * experience_level * 2 / 5     // max 20
                        + 100 * max(0, experience_level - 7) * 2 / 5;
+        }
+        else if (species == SP_HYDRA)
+        {
+            return skill(SK_ARMOUR, 100);
         }
     }
 
@@ -6974,6 +7043,8 @@ bool player::has_usable_offhand() const
         return false;
     if (shield())
         return false;
+    if (you.species == SP_HYDRA) 
+        return false;
 
     const item_def* wp = slot_item(EQ_WEAPON);
     return !wp || hands_reqd(*wp) != HANDS_TWO;
@@ -7214,6 +7285,12 @@ bool player::can_drink(bool temp) const
         return false;
     }
     return !you.has_mutation(MUT_NO_DRINK);
+
+}
+
+bool player::can_read() const
+{
+    return you.species != SP_HYDRA;
 
 }
 

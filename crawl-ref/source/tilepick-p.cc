@@ -19,6 +19,7 @@
 #include "tilepick.h"
 #include "transform.h"
 #include "traps.h"
+#include "mpr.h"
 
 static tileidx_t _modrng(int mod, tileidx_t first, tileidx_t last)
 {
@@ -592,6 +593,8 @@ static int _draconian_colour(int race, int level)
 
 tileidx_t tilep_species_to_base_tile(int sp, int level)
 {
+    int heads = you.props[NUM_HEADS_KEY].get_int();
+    dprf("tilep_species_to_base_tile: heads: %d", heads);
     switch (sp)
     {
     case SP_HUMAN:
@@ -666,6 +669,8 @@ tileidx_t tilep_species_to_base_tile(int sp, int level)
         return TILEP_BASE_VINE_STALKER;
     case SP_BARACHI:
         return TILEP_BASE_BARACHI;
+    case SP_HYDRA:
+        return TILEP_BASE_HYDRA + min(heads - 1, 4);
     case SP_GNOLL:
         return TILEP_BASE_GNOLL;
     case SP_DJINNI:
@@ -1057,6 +1062,22 @@ void tilep_calc_flags(const dolls_data &doll, int flag[])
         flag[TILEP_PART_BEARD] = TILEP_FLAG_HIDE;
         flag[TILEP_PART_SHADOW]= TILEP_FLAG_HIDE;
         flag[TILEP_PART_DRCWING]=TILEP_FLAG_HIDE;
+    }
+    else if (is_player_tile(doll.parts[TILEP_PART_BASE], TILEP_BASE_HYDRA))
+    {
+        flag[TILEP_PART_CLOAK] = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_BOOTS] = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_LEG]   = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_BODY]  = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_ARM]   = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_HAND1] = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_HAND2] = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_HELM]  = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_HAIR]  = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_BEARD] = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_SHADOW]= TILEP_FLAG_HIDE;
+        flag[TILEP_PART_DRCWING]=TILEP_FLAG_HIDE;
+        flag[TILEP_PART_DRCHEAD]=TILEP_FLAG_HIDE;
     }
     else if (is_player_tile(doll.parts[TILEP_PART_BASE], TILEP_BASE_OCTOPODE))
     {

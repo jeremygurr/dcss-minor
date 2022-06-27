@@ -421,7 +421,7 @@ namespace species
             return "paw";
         else if (mutation_level(species, MUT_TENTACLE_ARMS))
             return "tentacle";
-        else if (mutation_level(species, MUT_CLAWS))
+        else if (mutation_level(species, MUT_CLAWS) || species == SP_HYDRA)
             return "claw"; // overridden for felids by first check
         else
             return "hand";
@@ -463,7 +463,7 @@ namespace species
         {
         case EQ_LEFT_RING:
         case EQ_RIGHT_RING:
-            return arms > 2;
+            return arms > 2 || arms == 0;
         case EQ_RING_ONE:
         case EQ_RING_TWO:
         case EQ_RING_THREE:
