@@ -2241,6 +2241,8 @@ static void _expire_capped_summon(monster* mon, bool recurse)
 void summoned_monster(const monster *mons, const actor *caster,
                       spell_type spell)
 {
+    return; // don't cap summons now
+
     int cap = summons_limit(spell, caster->is_player());
     if (!cap) // summons aren't capped
         return;
@@ -2314,6 +2316,26 @@ int count_summons(const actor *summoner, spell_type spell)
         int stype    = 0;
         const bool summoned = mi->is_summoned(nullptr, &stype);
         if (summoned && stype == spell && summoner->mid == mi->summoner
+            && mons_aligned(summoner, *mi))
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+int count_summons(const actor *summoner)
+{
+    int count = 0;
+    for (monster_iterator mi; mi; ++mi)
+    {
+        if (summoner == *mi)
+            continue;
+
+        int stype    = 0;
+        const bool summoned = mi->is_summoned(nullptr, &stype);
+        if (summoned && summoner->mid == mi->summoner
             && mons_aligned(summoner, *mi))
         {
             count++;

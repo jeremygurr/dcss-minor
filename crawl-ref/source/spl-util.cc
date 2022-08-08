@@ -521,6 +521,11 @@ bool spell_is_direct_attack(spell_type spell)
 int spell_mana(spell_type which_spell, bool real_spell)
 {
     const int level = _seekspell(which_spell)->level;
+
+    if (real_spell && spell_typematch(which_spell, spschool::summoning)) {
+      return level * level * (count_summons(&you) / 2 + 1) / 2 + 1;
+    }
+
     if (real_spell && (you.duration[DUR_BRILLIANCE]
                        || player_equip_unrand(UNRAND_FOLLY)))
     {
