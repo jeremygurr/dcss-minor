@@ -1316,14 +1316,17 @@ int stat_modify_damage(int damage, skill_type wpn_skill, bool using_weapon)
     // Ranged weapons and short/long blades use dex instead.
     const bool use_str = weapon_uses_strength(wpn_skill, using_weapon);
 
+    int attr1;
+    int attr2;
     if (using_weapon) {
-      int attr1 = use_str ? you.strength() : you.dex();
-      int attr2 = you.strength() + you.dex() + you.intel();
-      damage *= max(1.0, 50 + 2.5 * attr1 + 2.5 * attr2 / 3);
-      damage /= 100;
+      attr1 = use_str ? you.strength() : you.dex();
+      attr2 = (you.strength() + you.dex() + you.intel()) / 3;
     } else {
-      damage *= you.strength() * you.dex() / 100;
+      attr1 = (you.strength() + you.dex() + you.intel()) / 3;
+      attr2 = attr1;
     }
+    damage *= max(1.0, 50 + 2.5 * attr1 + 2.5 * attr2);
+    damage /= 100;
 
     return damage;
 }
