@@ -359,30 +359,30 @@ static vector<ability_def> &_get_ability_list()
         { ABIL_ZIN_RECITE, "Recite",
             0, 0, 0, -1, {fail_basis::invo, 30, 6, 20}, abflag::none },
         { ABIL_ZIN_VITALISATION, "Vitalisation",
-            2, 0, 1, -1, {fail_basis::invo, 40, 5, 20}, abflag::none },
+            0, 0, 1, -1, {fail_basis::invo, 40, 5, 20}, abflag::none },
         { ABIL_ZIN_IMPRISON, "Imprison",
-            5, 0, 4, LOS_MAX_RANGE, {fail_basis::invo, 60, 5, 20},
+            0, 0, 4, LOS_MAX_RANGE, {fail_basis::invo, 60, 5, 20},
             abflag::target | abflag::not_self },
         { ABIL_ZIN_SANCTUARY, "Sanctuary",
-            7, 0, 15, -1, {fail_basis::invo, 80, 4, 25}, abflag::none },
+            0, 0, 15, -1, {fail_basis::invo, 80, 4, 25}, abflag::none },
         { ABIL_ZIN_DONATE_GOLD, "Donate Gold",
             0, 0, 0, -1, {fail_basis::invo}, abflag::none },
 
         // The Shining One
         { ABIL_TSO_DIVINE_SHIELD, "Divine Shield",
-            3, 0, 2, -1, {fail_basis::invo, 40, 5, 20}, abflag::none },
+            0, 0, 2, -1, {fail_basis::invo, 40, 5, 20}, abflag::none },
         { ABIL_TSO_CLEANSING_FLAME, "Cleansing Flame",
-            5, 0, 2, -1, {fail_basis::invo, 70, 4, 25}, abflag::none },
+            0, 0, 2, -1, {fail_basis::invo, 70, 4, 25}, abflag::none },
         { ABIL_TSO_SUMMON_DIVINE_WARRIOR, "Summon Divine Warrior",
-            8, 0, 5, -1, {fail_basis::invo, 80, 4, 25}, abflag::none },
+            0, 0, 5, -1, {fail_basis::invo, 80, 4, 25}, abflag::none },
         { ABIL_TSO_BLESS_WEAPON, "Brand Weapon With Holy Wrath",
             0, 0, 0, -1, {fail_basis::invo}, abflag::none },
 
         // Kikubaaqudgha
         { ABIL_KIKU_UNEARTH_WRETCHES, "Unearth Wretches",
-            3, 0, 4, -1, {fail_basis::invo, 40, 5, 20}, abflag::none },
+            0, 0, 4, -1, {fail_basis::invo, 40, 5, 20}, abflag::none },
         { ABIL_KIKU_TORMENT, "Torment",
-            4, 0, 8, -1, {fail_basis::invo, 60, 5, 20}, abflag::none },
+            0, 0, 8, -1, {fail_basis::invo, 60, 5, 20}, abflag::none },
         { ABIL_KIKU_GIFT_CAPSTONE_SPELLS, "Receive Forbidden Knowledge",
             0, 0, 0, -1, {fail_basis::invo}, abflag::none },
         { ABIL_KIKU_BLESS_WEAPON, "Brand Weapon With Pain",
@@ -390,22 +390,22 @@ static vector<ability_def> &_get_ability_list()
 
         // Yredelemnul
         { ABIL_YRED_RECALL_UNDEAD_HARVEST, "Recall Undead Harvest",
-            2, 0, 0, -1, {fail_basis::invo, 20, 4, 25}, abflag::none },
+            0, 0, 0, -1, {fail_basis::invo, 20, 4, 25}, abflag::none },
         { ABIL_YRED_DARK_BARGAIN, "Dark Bargain",
-            4, 0, 0, -1, {fail_basis::invo, 40, 4, 25}, abflag::souls },
+            0, 0, 0, -1, {fail_basis::invo, 40, 4, 25}, abflag::souls },
         { ABIL_YRED_DRAIN_LIFE, "Drain Life",
-            6, 0, 0, -1, {fail_basis::invo, 60, 4, 25}, abflag::souls },
+            0, 0, 0, -1, {fail_basis::invo, 60, 4, 25}, abflag::souls },
         { ABIL_YRED_BIND_SOUL, "Bind Soul",
-            8, 0, 0, LOS_MAX_RANGE, {fail_basis::invo, 80, 4, 25},
+            0, 0, 0, LOS_MAX_RANGE, {fail_basis::invo, 80, 4, 25},
             abflag::target | abflag::not_self | abflag::souls },
 
         // Okawaru
         { ABIL_OKAWARU_HEROISM, "Heroism",
-            2, 0, 1, -1, {fail_basis::invo, 30, 6, 20}, abflag::none },
+            0, 0, 1, -1, {fail_basis::invo, 30, 6, 20}, abflag::none },
         { ABIL_OKAWARU_FINESSE, "Finesse",
-            5, 0, 3, -1, {fail_basis::invo, 60, 4, 25}, abflag::none },
+            0, 0, 3, -1, {fail_basis::invo, 60, 4, 25}, abflag::none },
         { ABIL_OKAWARU_DUEL, "Duel",
-            7, 0, 10, LOS_MAX_RANGE, {fail_basis::invo, 80, 4, 20},
+            0, 0, 10, LOS_MAX_RANGE, {fail_basis::invo, 80, 4, 20},
             abflag::target | abflag::not_self },
 
         // Makhleb
@@ -442,28 +442,28 @@ static vector<ability_def> &_get_ability_list()
 
         // Elyvilon
         { ABIL_ELYVILON_PURIFICATION, "Purification",
-            2, 0, 2, -1, {fail_basis::invo, 20, 5, 20}, abflag::conf_ok },
+            0, 0, 2, -1, {fail_basis::invo, 20, 5, 20}, abflag::conf_ok },
         { ABIL_ELYVILON_HEAL_OTHER, "Heal Other",
-            2, 0, 2, -1, {fail_basis::invo, 40, 5, 20}, abflag::none },
+            0, 0, 2, -1, {fail_basis::invo, 40, 5, 20}, abflag::none },
         { ABIL_ELYVILON_HEAL_SELF, "Heal Self",
-            2, 0, 3, -1, {fail_basis::invo, 40, 5, 20}, abflag::none },
+            0, 0, 3, -1, {fail_basis::invo, 40, 5, 20}, abflag::none },
         { ABIL_ELYVILON_DIVINE_VIGOUR, "Divine Vigour",
             0, 0, 6, -1, {fail_basis::invo, 80, 4, 25}, abflag::none },
 
         // Lugonu
         { ABIL_LUGONU_ABYSS_EXIT, "Depart the Abyss",
-            1, 0, 10, -1, {fail_basis::invo, 30, 6, 20}, abflag::none },
+            0, 0, 10, -1, {fail_basis::invo, 30, 6, 20}, abflag::none },
         { ABIL_LUGONU_BEND_SPACE, "Bend Space",
-            1, scaling_cost::fixed(2), 0, -1, {fail_basis::invo, 40, 5, 20},
+            0, scaling_cost::fixed(2), 0, -1, {fail_basis::invo, 40, 5, 20},
             abflag::none },
         { ABIL_LUGONU_BANISH, "Banish",
-            4, 0, generic_cost::range(3, 4), LOS_MAX_RANGE,
+            0, 0, generic_cost::range(3, 4), LOS_MAX_RANGE,
             {fail_basis::invo, 85, 7, 20}, abflag::none },
         { ABIL_LUGONU_CORRUPT, "Corrupt",
-            7, scaling_cost::fixed(5), 10, -1, {fail_basis::invo, 70, 4, 25},
+            0, scaling_cost::fixed(5), 10, -1, {fail_basis::invo, 70, 4, 25},
             abflag::none },
         { ABIL_LUGONU_ABYSS_ENTER, "Enter the Abyss",
-            10, 0, 28, -1, {fail_basis::invo, 80, 4, 25}, abflag::pain },
+            0, 0, 28, -1, {fail_basis::invo, 80, 4, 25}, abflag::pain },
         { ABIL_LUGONU_BLESS_WEAPON, "Brand Weapon With Distortion",
             0, 0, 0, -1, {fail_basis::invo}, abflag::none },
 
@@ -477,19 +477,19 @@ static vector<ability_def> &_get_ability_list()
         { ABIL_NEMELEX_DRAW_STACK, "Draw Stack",
             0, 0, 0, -1, {fail_basis::invo}, abflag::card },
         { ABIL_NEMELEX_TRIPLE_DRAW, "Triple Draw",
-            2, 0, 6, -1, {fail_basis::invo, 60, 5, 20}, abflag::none },
+            0, 0, 6, -1, {fail_basis::invo, 60, 5, 20}, abflag::none },
         { ABIL_NEMELEX_DEAL_FOUR, "Deal Four",
-            8, 0, 4, -1, {fail_basis::invo, -1}, // failure special-cased
+            0, 0, 4, -1, {fail_basis::invo, -1}, // failure special-cased
             abflag::none },
         { ABIL_NEMELEX_STACK_FIVE, "Stack Five",
-            5, 0, 10, -1, {fail_basis::invo, 80, 4, 25}, abflag::none },
+            0, 0, 10, -1, {fail_basis::invo, 80, 4, 25}, abflag::none },
 
         // Beogh
         { ABIL_BEOGH_SMITING, "Smiting",
-            3, 0, generic_cost::range(3, 4), LOS_MAX_RANGE,
+            0, 0, generic_cost::range(3, 4), LOS_MAX_RANGE,
             {fail_basis::invo, 40, 5, 20}, abflag::none },
         { ABIL_BEOGH_RECALL_ORCISH_FOLLOWERS, "Recall Orcish Followers",
-            2, 0, 0, -1, {fail_basis::invo, 30, 6, 20}, abflag::none },
+            0, 0, 0, -1, {fail_basis::invo, 30, 6, 20}, abflag::none },
         { ABIL_BEOGH_GIFT_ITEM, "Give Item to Named Follower",
             0, 0, 0, LOS_MAX_RANGE, {fail_basis::invo}, abflag::none },
         { ABIL_BEOGH_RESURRECTION, "Resurrection",
@@ -497,30 +497,30 @@ static vector<ability_def> &_get_ability_list()
 
         // Jiyva
         { ABIL_JIYVA_OOZEMANCY, "Oozemancy",
-            3, 0, 8, -1, {fail_basis::invo, 80, 0, 2}, abflag::none },
+            0, 0, 8, -1, {fail_basis::invo, 80, 0, 2}, abflag::none },
         { ABIL_JIYVA_SLIMIFY, "Slimify",
-            5, 0, 10, -1, {fail_basis::invo, 90, 0, 2}, abflag::none },
+            0, 0, 10, -1, {fail_basis::invo, 90, 0, 2}, abflag::none },
 
         // Fedhas
         { ABIL_FEDHAS_WALL_OF_BRIARS, "Wall of Briars",
-            3, 0, 2, -1, {fail_basis::invo, 30, 6, 20}, abflag::none },
+            0, 0, 2, -1, {fail_basis::invo, 30, 6, 20}, abflag::none },
         { ABIL_FEDHAS_GROW_BALLISTOMYCETE, "Grow Ballistomycete",
-            4, 0, 4, 2, {fail_basis::invo, 60, 4, 25}, abflag::target },
+            0, 0, 4, 2, {fail_basis::invo, 60, 4, 25}, abflag::target },
         { ABIL_FEDHAS_OVERGROW, "Overgrow",
-            8, 0, 12, LOS_MAX_RANGE, {fail_basis::invo, 70, 5, 20},
+            0, 0, 12, LOS_MAX_RANGE, {fail_basis::invo, 70, 5, 20},
             abflag::none },
         { ABIL_FEDHAS_GROW_OKLOB, "Grow Oklob",
-            6, 0, 6, 2, {fail_basis::invo, 80, 4, 25}, abflag::target },
+            0, 0, 6, 2, {fail_basis::invo, 80, 4, 25}, abflag::target },
 
         // Cheibriados
         { ABIL_CHEIBRIADOS_TIME_BEND, "Bend Time",
-            3, 0, 1, -1, {fail_basis::invo, 40, 4, 20}, abflag::none },
+            0, 0, 1, -1, {fail_basis::invo, 40, 4, 20}, abflag::none },
         { ABIL_CHEIBRIADOS_DISTORTION, "Temporal Distortion",
-            4, 0, 3, -1, {fail_basis::invo, 60, 5, 20}, abflag::instant },
+            0, 0, 3, -1, {fail_basis::invo, 60, 5, 20}, abflag::instant },
         { ABIL_CHEIBRIADOS_SLOUCH, "Slouch",
-            5, 0, 8, -1, {fail_basis::invo, 60, 4, 25}, abflag::none },
+            0, 0, 8, -1, {fail_basis::invo, 60, 4, 25}, abflag::none },
         { ABIL_CHEIBRIADOS_TIME_STEP, "Step From Time",
-            10, 0, 10, -1, {fail_basis::invo, 80, 4, 25}, abflag::none },
+            0, 0, 10, -1, {fail_basis::invo, 80, 4, 25}, abflag::none },
 
         // Ashenzari
         { ABIL_ASHENZARI_CURSE, "Curse Item",
@@ -530,19 +530,19 @@ static vector<ability_def> &_get_ability_list()
 
         // Dithmenos
         { ABIL_DITHMENOS_SHADOW_STEP, "Shadow Step",
-            4, 80, 5, -1, {fail_basis::invo, 30, 6, 20}, // range special-cased
+            0, 80, 5, -1, {fail_basis::invo, 30, 6, 20}, // range special-cased
             abflag::none },
         { ABIL_DITHMENOS_SHADOW_FORM, "Shadow Form",
-            9, 0, 12, -1, {fail_basis::invo, 80, 4, 25}, abflag::max_hp_drain },
+            0, 0, 12, -1, {fail_basis::invo, 80, 4, 25}, abflag::max_hp_drain },
 
         // Ru
         { ABIL_RU_DRAW_OUT_POWER, "Draw Out Power",
             0, 0, 0, -1, {fail_basis::invo},
             abflag::exhaustion | abflag::max_hp_drain | abflag::conf_ok },
         { ABIL_RU_POWER_LEAP, "Power Leap",
-            5, 0, 0, 3, {fail_basis::invo}, abflag::exhaustion },
+            0, 0, 0, 3, {fail_basis::invo}, abflag::exhaustion },
         { ABIL_RU_APOCALYPSE, "Apocalypse",
-            8, 0, 0, -1, {fail_basis::invo},
+            0, 0, 0, -1, {fail_basis::invo},
             abflag::exhaustion | abflag::max_hp_drain },
 
         { ABIL_RU_SACRIFICE_PURITY, "Sacrifice Purity",
@@ -592,33 +592,33 @@ static vector<ability_def> &_get_ability_list()
 
         // Qazlal
         { ABIL_QAZLAL_UPHEAVAL, "Upheaval",
-            3, 0, generic_cost::range(3, 4), LOS_MAX_RANGE,
+            0, 0, generic_cost::range(3, 4), LOS_MAX_RANGE,
             {fail_basis::invo, 40, 5, 20},
             abflag::none },
         { ABIL_QAZLAL_ELEMENTAL_FORCE, "Elemental Force",
-            5, 0, 6, -1, {fail_basis::invo, 60, 5, 20}, abflag::none },
+            0, 0, 6, -1, {fail_basis::invo, 60, 5, 20}, abflag::none },
         { ABIL_QAZLAL_DISASTER_AREA, "Disaster Area",
-            8, 0, 10, -1, {fail_basis::invo, 70, 4, 25}, abflag::none },
+            0, 0, 10, -1, {fail_basis::invo, 70, 4, 25}, abflag::none },
 
         // Uskayaw
         { ABIL_USKAYAW_STOMP, "Stomp",
-            3, 0, generic_cost::fixed(20), -1, {fail_basis::invo},
+            0, 0, generic_cost::fixed(20), -1, {fail_basis::invo},
             abflag::none },
         { ABIL_USKAYAW_LINE_PASS, "Line Pass",
-            4, 0, generic_cost::fixed(20), -1,
+            0, 0, generic_cost::fixed(20), -1,
             {fail_basis::invo}, abflag::none },
         { ABIL_USKAYAW_GRAND_FINALE, "Grand Finale",
-            8, 0, generic_cost::fixed(0), LOS_MAX_RANGE,
+            0, 0, generic_cost::fixed(0), LOS_MAX_RANGE,
             {fail_basis::invo, 120 + piety_breakpoint(4), 5, 1}, abflag::none },
 
         // Hepliaklqana
         { ABIL_HEPLIAKLQANA_RECALL, "Recall Ancestor",
-            2, 0, 0, -1, {fail_basis::invo}, abflag::none },
+            0, 0, 0, -1, {fail_basis::invo}, abflag::none },
         { ABIL_HEPLIAKLQANA_TRANSFERENCE, "Transference",
-            2, 0, 3, LOS_MAX_RANGE, {fail_basis::invo, 40, 5, 20},
+            0, 0, 3, LOS_MAX_RANGE, {fail_basis::invo, 40, 5, 20},
             abflag::none },
         { ABIL_HEPLIAKLQANA_IDEALISE, "Idealise",
-            4, 0, 4, -1, {fail_basis::invo, 60, 4, 25}, abflag::none },
+            0, 0, 4, -1, {fail_basis::invo, 60, 4, 25}, abflag::none },
 
         { ABIL_HEPLIAKLQANA_TYPE_KNIGHT, "Ancestor Life: Knight",
             0, 0, 0, -1, {fail_basis::invo}, abflag::none },
