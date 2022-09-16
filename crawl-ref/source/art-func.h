@@ -1671,6 +1671,6 @@ static void _VITALITY_world_reacts(item_def */*item*/)
     if (you.props[MANA_REGEN_AMULET_ACTIVE].get_int() == 1
         || you.activated[EQ_AMULET])
     {
-        did_god_conduct(DID_EVIL, 1);
+        // did_god_conduct(DID_EVIL, 1);
     }
 }

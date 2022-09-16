@@ -1198,7 +1198,7 @@ OBJ:      OBJ_JEWELLERY/AMU_MANA_REGENERATION
 INSCRIP:  RegenMP++
 REGEN:    2
 COLOUR:   ETC_MUTAGENIC
-BOOL:     skip_ego, evil
+BOOL:     skip_ego
 VALUE:    1000
 TILE:     urand_vitality
 
